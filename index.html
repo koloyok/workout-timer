@@ -2,12 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
 <title>Workout Timer</title>
-
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:#111;margin:0}
+body{background:#111}
 input[type=range]{accent-color:#8883EB;width:100%}
 input[type=number]{-moz-appearance:textfield;outline:none}
 input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none}
@@ -20,9 +19,9 @@ input:focus{outline:none;border-color:rgba(255,255,255,0.28)!important}
 </style>
 </head>
 <body>
-<svg xmlns="http://www.w3.org/2000/svg" style="display:none"><symbol id="ti-arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l14 0"/><path d="M5 12l6 6"/><path d="M5 12l6 -6"/></symbol><symbol id="ti-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5l10 -10"/></symbol><symbol id="ti-dumbbell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.026 9.61l-.95 -4.18a2 2 0 0 1 1.95 -2.43h8a2 2 0 0 1 2 2.43l-1 4.2"/><path d="M9.026 17.001h6"/><path d="M18.906 20.06a7.92 7.92 0 0 0 1 -5.33a8 8 0 1 0 -14.77 5.33a2 2 0 0 0 1.71 .94h10.36a2 2 0 0 0 1.7 -.94"/></symbol><symbol id="ti-edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415"/><path d="M16 5l3 3"/></symbol><symbol id="ti-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2"/></symbol><symbol id="ti-layout-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2l0 -2"/><path d="M4 16a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2l0 -2"/></symbol><symbol id="ti-list-numbers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 6h9"/><path d="M11 12h9"/><path d="M12 18h8"/><path d="M4 16a2 2 0 1 1 4 0c0 .591 -.5 1 -1 1.5l-3 2.5h4"/><path d="M6 10v-6l-2 2"/></symbol><symbol id="ti-minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l14 0"/></symbol><symbol id="ti-player-pause" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1l0 -12"/><path d="M14 6a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1l0 -12"/></symbol><symbol id="ti-player-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v16l13 -8l-13 -8"/></symbol><symbol id="ti-player-skip-forward" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5v14l12 -7l-12 -7"/><path d="M20 5l0 14"/></symbol><symbol id="ti-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5l0 14"/><path d="M5 12l14 0"/></symbol><symbol id="ti-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"/><path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/></symbol><symbol id="ti-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></symbol><symbol id="ti-trophy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21l8 0"/><path d="M12 17l0 4"/><path d="M7 4l10 0"/><path d="M17 4v8a5 5 0 0 1 -10 0v-8"/><path d="M3 9a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M17 9a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/></symbol><symbol id="ti-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6l6 -6"/></symbol><symbol id="ti-grip-vertical" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M9 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M9 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></symbol><symbol id="ti-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></symbol></svg>
-<div id="root" style="background:#111;min-height:560px;color:#f0f0f0;font-family:system-ui,-apple-system,sans-serif">
-  <div style="display:flex;align-items:center;justify-content:center;height:200px;color:#444;font-size:14px">Loading…</div>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none"><symbol id="ti-arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l14 0"/><path d="M5 12l6 6"/><path d="M5 12l6 -6"/></symbol><symbol id="ti-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5l10 -10"/></symbol><symbol id="ti-dumbbell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.026 9.61l-.95 -4.18a2 2 0 0 1 1.95 -2.43h8a2 2 0 0 1 2 2.43l-1 4.2"/><path d="M9.026 17.001h6"/><path d="M18.906 20.06a7.92 7.92 0 0 0 1 -5.33a8 8 0 1 0 -14.77 5.33a2 2 0 0 0 1.71 .94h10.36a2 2 0 0 0 1.7 -.94"/></symbol><symbol id="ti-edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415"/><path d="M16 5l3 3"/></symbol><symbol id="ti-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2"/></symbol><symbol id="ti-layout-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2l0 -2"/><path d="M4 16a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2l0 -2"/></symbol><symbol id="ti-list-numbers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 6h9"/><path d="M11 12h9"/><path d="M12 18h8"/><path d="M4 16a2 2 0 1 1 4 0c0 .591 -.5 1 -1 1.5l-3 2.5h4"/><path d="M6 10v-6l-2 2"/></symbol><symbol id="ti-minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l14 0"/></symbol><symbol id="ti-player-pause" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1l0 -12"/><path d="M14 6a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1l0 -12"/></symbol><symbol id="ti-player-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v16l13 -8l-13 -8"/></symbol><symbol id="ti-player-skip-forward" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5v14l12 -7l-12 -7"/><path d="M20 5l0 14"/></symbol><symbol id="ti-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5l0 14"/><path d="M5 12l14 0"/></symbol><symbol id="ti-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"/><path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/></symbol><symbol id="ti-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></symbol><symbol id="ti-trophy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21l8 0"/><path d="M12 17l0 4"/><path d="M7 4l10 0"/><path d="M17 4v8a5 5 0 0 1 -10 0v-8"/><path d="M3 9a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M17 9a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/></symbol><symbol id="ti-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6l6 -6"/></symbol><symbol id="ti-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></symbol></svg>
+<div id="root" style="background:#111;color:#f0f0f0;font-family:system-ui,-apple-system,sans-serif">
+  <div style="display:flex;align-items:center;justify-content:center;height:100dvh;color:#444;font-size:14px">Loading…</div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
@@ -34,10 +33,9 @@ function Icon({name,style}){
     h('use',{href:'#ti-'+name}));
 }
 
-// ── Colours ──────────────────────────────────────────────────────────────────
 // ── Colour tokens (dark scheme) ───────────────────────────────────────────────
 const T={
-  'violet-text':'#8883EB','violet-bg':'#1E1D3A',
+  'violet-text':'#8883EB',
   'tangerine-text':'#E0804A','tangerine-bg':'#2B1A0E',
   'amber-text':'#D4A822','amber-bg':'#241A05',
   'emerald-text':'#3DAF60',
@@ -49,7 +47,7 @@ const C={
   b:'rgba(255,255,255,0.09)',bhi:'rgba(255,255,255,0.2)',
   t:'#f0f0f0',ts:'#888',tt:'#444',
   // primary violet
-  a:T['violet-text'],abg:T['violet-bg'],at:'#1a1a1a',
+  a:T['violet-text'],at:'#1a1a1a',
   // traditional tangerine
   tr:T['tangerine-text'],trbg:T['tangerine-bg'],trt:'#1a1a1a',
   // circuit amber
@@ -78,7 +76,6 @@ const fmtL=s=>s===0?'None':s<60?`${s}s`:`${fmt(s)} min`;
 const newTradEx=()=>({id:uid(),name:'',mode:'reps',reps:10,duration:60,sets:3,restBetweenSets:60,restAfterExercise:120});
 const newCircEx=()=>({id:uid(),name:'',mode:'reps',reps:10,duration:60,restAfterExercise:120});
 const newTradRoutine=()=>({id:uid(),title:'',mode:'traditional',exercises:[newTradEx()]});
-const newCircRoutine=()=>({id:uid(),title:'',mode:'circuit',rounds:3,restBetweenRounds:90,exercises:[newCircEx()]});
 
 // ── Sequence builders ─────────────────────────────────────────────────────────
 function buildTradSeq(r){
@@ -89,7 +86,7 @@ function buildTradSeq(r){
       steps.push({type:'work',label:ex.name||'Exercise',info:ex.sets>1?`Set ${i} of ${ex.sets}`:null,timed:ex.mode==='time',dur:ex.mode==='time'?ex.duration:null,reps:ex.mode==='reps'?ex.reps:null});
       if(i<ex.sets&&ex.restBetweenSets>0)steps.push({type:'rest',label:'Rest',info:`Set ${i+1} of ${ex.sets} next`,dur:ex.restBetweenSets,timed:true});
     }
-    if(!last&&ex.restAfterExercise>0)steps.push({type:'rest',label:'Rest',info:`Up next: ${r.exercises[ei+1]?.name||'next exercise'}`,dur:ex.restAfterExercise,timed:true,isTrans:true});
+    if(!last&&ex.restAfterExercise>0)steps.push({type:'rest',label:'Rest',info:`Up next: ${r.exercises[ei+1]?.name||'next exercise'}`,dur:ex.restAfterExercise,timed:true});
   });
   return steps;
 }
@@ -119,7 +116,7 @@ function estTotal(r){
 // ── Shared style objects ───────────────────────────────────────────────────────
 const card={background:C.s2,border:`1px solid ${C.b}`,borderRadius:12,padding:'12px',display:'flex',flexDirection:'column',gap:10};
 const pill=(bg,color,border)=>({fontSize:11,padding:'2px 10px',borderRadius:99,fontWeight:500,background:bg,color,border:`1px solid ${border}`});
-const cbtn=p=>({flex:1,padding:'12px 0',background:p?C.a:'rgba(255,255,255,0.08)',border:p?'none':'1px solid rgba(255,255,255,0.15)',borderRadius:10,color:p?'#1a1a1a':C.t,fontSize:15,fontWeight:600,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',gap:8});
+const cbtn=p=>({flex:1,padding:'12px 0',background:p?C.a:'rgba(255,255,255,0.08)',border:p?'none':'1px solid rgba(255,255,255,0.15)',borderRadius:10,color:p?C.at:C.t,fontSize:15,fontWeight:600,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',gap:8});
 
 // ── Atoms ─────────────────────────────────────────────────────────────────────
 function Ring({progress,size=172,sw=10,color}){
@@ -150,7 +147,7 @@ function SliderVal({value,onChange,max=300,color}){
       style:{width:46,padding:'4px 6px',fontSize:13,fontWeight:500,borderRadius:6,border:`1px solid ${C.b}`,background:C.inp,color:color||C.a,textAlign:'center',fontFamily:'inherit'}}));
 }
 function LR({label,right,muted}){
-  return h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',paddingLeft:0,gap:10}},
+  return h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',gap:10}},
     h('span',{style:{fontSize:12,color:muted?C.tt:C.ts,whiteSpace:'nowrap'}},label),right);
 }
 function SL({text}){return h('span',{style:{fontSize:11,fontWeight:500,color:C.ts,textTransform:'uppercase',letterSpacing:'0.07em',display:'block',marginBottom:8}},text);}
@@ -164,10 +161,10 @@ function ExName({ex,idx,total,onChange,onRemove}){
 function TypeRow({ex,onChange}){
   const[rawDur,setRawDur]=useState(String(ex.duration));
   useEffect(()=>setRawDur(String(ex.duration)),[ex.duration]);
-  return h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',paddingLeft:0,gap:10}},
+  return h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',gap:10}},
     h('div',{className:'tog',style:{flexShrink:0}},
-      h('button',{className:'tbtn',onClick:()=>onChange('mode','reps'),style:{background:ex.mode==='reps'?C.a:'transparent',color:ex.mode==='reps'?'#1a1a1a':C.ts}},'Reps'),
-      h('button',{className:'tbtn',onClick:()=>onChange('mode','time'),style:{background:ex.mode==='time'?C.a:'transparent',color:ex.mode==='time'?'#1a1a1a':C.ts}},'Time')),
+      h('button',{className:'tbtn',onClick:()=>onChange('mode','reps'),style:{background:ex.mode==='reps'?C.a:'transparent',color:ex.mode==='reps'?C.at:C.ts}},'Reps'),
+      h('button',{className:'tbtn',onClick:()=>onChange('mode','time'),style:{background:ex.mode==='time'?C.a:'transparent',color:ex.mode==='time'?C.at:C.ts}},'Time')),
     ex.mode==='reps'
       ?h(Stepper,{value:ex.reps,onChange:v=>onChange('reps',v),min:1,max:999})
       :h('div',{style:{display:'flex',alignItems:'center',gap:8,flex:1,minWidth:0}},
@@ -178,12 +175,11 @@ function TypeRow({ex,onChange}){
             style:{width:46,padding:'4px 6px',fontSize:13,fontWeight:500,borderRadius:6,border:`1px solid ${C.b}`,background:C.inp,color:C.a,textAlign:'center',fontFamily:'inherit',flexShrink:0}})));
 }
 
-// Edit header — lavender save btn
-function EH({isNew,canSave,onSave,onBack,title}){
+function EH({canSave,onSave,onBack,title}){
   return h('div',{style:{display:'flex',alignItems:'center',gap:12,padding:'1rem',borderBottom:`1px solid ${C.b}`,position:'sticky',top:0,background:C.bg,zIndex:10}},
     h('button',{className:'ib',onClick:onBack},h(Icon,{name:'arrow-left'})),
     h('h1',{style:{fontSize:18,fontWeight:600,flex:1,color:C.t}},title||'Edit'),
-    h('button',{onClick:()=>canSave&&onSave(),disabled:!canSave,style:{padding:'7px 18px',background:canSave?C.a:'rgba(255,255,255,0.07)',border:'none',borderRadius:8,color:canSave?'#fff':C.tt,fontSize:14,fontWeight:600,cursor:canSave?'pointer':'default'}},'Save'));
+    h('button',{onClick:()=>canSave&&onSave(),disabled:!canSave,style:{padding:'7px 18px',background:canSave?C.a:'rgba(255,255,255,0.07)',border:'none',borderRadius:8,color:canSave?C.t:C.tt,fontSize:14,fontWeight:600,cursor:canSave?'pointer':'default'}},'Save'));
 }
 
 function TradEx({ex,idx,total,isLast,onChange,onRemove}){
@@ -204,35 +200,30 @@ function CircEx({ex,idx,total,isLast,onChange,onRemove}){
 // ── Mode colours helper ────────────────────────────────────────────────────────
 const modeAccent=m=>m==='circuit'?C.ci:C.tr;
 const modeBg=m=>m==='circuit'?C.cibg:C.trbg;
-const modeText=m=>m==='circuit'?C.cit:C.trt;
-const modeLabel=(r)=>r.mode==='circuit'?`Circuit · ${r.rounds} round${r.rounds!==1?'s':''}`:' Traditional';
 
 // ── Edit Routine ──────────────────────────────────────────────────────────────
 function EditRoutineView({routine,onSave,onBack}){
   const[r,setR]=useState(routine);
   const upEx=(id,f,v)=>setR(p=>({...p,exercises:p.exercises.map(e=>e.id===id?{...e,[f]:v}:e)}));
   const canSave=r.title.trim()&&r.exercises.length>0&&r.exercises.every(e=>e.name.trim());
+  const total=estTotal(r);
   const switchMode=m=>{
     if(m===r.mode)return;
     setR(p=>m==='circuit'
       ?{...p,mode:'circuit',rounds:3,restBetweenRounds:90,exercises:[newCircEx()]}
       :{...p,mode:'traditional',exercises:[newTradEx()]});
   };
-  const isNew=!routine.title;
   return h('div',{style:{maxWidth:420,margin:'0 auto',paddingBottom:'4rem'}},
-    h(EH,{isNew,canSave,onSave:()=>onSave(r),onBack,title:isNew?'New Routine':'Edit Routine'}),
+    h(EH,{canSave,onSave:()=>onSave(r),onBack,title:routine.title?'Edit Routine':'New Routine'}),
     h('div',{style:{padding:'1.25rem 1rem',display:'flex',flexDirection:'column',gap:'1.5rem'}},
-      // Mode toggle at top
       h('div',null,
         h(SL,{text:'Workout Type'}),
         h('div',{className:'tog',style:{width:'100%'}},
-          h('button',{className:'tbtn',onClick:()=>switchMode('traditional'),style:{flex:1,padding:'8px 0',background:r.mode==='traditional'?C.tr:'transparent',color:r.mode==='traditional'?'#1a1a1a':C.ts}},'Traditional'),
-          h('button',{className:'tbtn',onClick:()=>switchMode('circuit'),style:{flex:1,padding:'8px 0',background:r.mode==='circuit'?C.ci:'transparent',color:r.mode==='circuit'?'#1a1a1a':C.ts}},'Circuit'))),
-      // Title
+          h('button',{className:'tbtn',onClick:()=>switchMode('traditional'),style:{flex:1,padding:'8px 0',background:r.mode==='traditional'?C.tr:'transparent',color:r.mode==='traditional'?C.trt:C.ts}},'Traditional'),
+          h('button',{className:'tbtn',onClick:()=>switchMode('circuit'),style:{flex:1,padding:'8px 0',background:r.mode==='circuit'?C.ci:'transparent',color:r.mode==='circuit'?C.cit:C.ts}},'Circuit'))),
       h('div',null,
         h(SL,{text:'Routine Title'}),
         h('input',{value:r.title,onChange:e=>setR(p=>({...p,title:e.target.value})),placeholder:r.mode==='circuit'?'e.g. Strength, Mobility, Cardio…':'e.g. Push, Pull, Legs…',style:{width:'100%',padding:'10px 13px',fontSize:15,borderRadius:9,border:`1px solid ${C.b}`,background:C.inp,color:C.t}})),
-      // Circuit settings
       r.mode==='circuit'&&h('div',null,
         h(SL,{text:'Circuit Settings'}),
         h('div',{style:{background:C.s2,borderRadius:12,border:`1px solid ${C.b}`,padding:'12px',display:'flex',flexDirection:'column',gap:12}},
@@ -244,11 +235,10 @@ function EditRoutineView({routine,onSave,onBack}){
             h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',gap:10}},
               h('span',{style:{fontSize:12,color:C.ts,whiteSpace:'nowrap'}},'Rest between rounds'),
               h(SliderVal,{value:r.restBetweenRounds,onChange:v=>setR(p=>({...p,restBetweenRounds:v})),color:C.r}))))),
-      // Exercises
       h('div',null,
         h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:r.mode==='circuit'?4:10}},
           h(SL,{text:`Exercises · ${r.exercises.length}`}),
-          estTotal(r)>0&&h('span',{style:{fontSize:12,color:C.tt}},`~${fmtL(estTotal(r))} timed`)),
+          total>0&&h('span',{style:{fontSize:12,color:C.tt}},`~${fmtL(total)} timed`)),
         r.mode==='circuit'&&h('p',{style:{fontSize:12,color:C.tt,marginBottom:10}},'Each exercise is done once per round.'),
         h('div',{style:{display:'flex',flexDirection:'column',gap:10}},
           r.mode==='traditional'
@@ -263,9 +253,8 @@ function EditSessionView({session,routines,onSave,onBack}){
   const[s,setS]=useState(session);
   const canSave=s.name.trim();
   const toggle=id=>setS(p=>({...p,routineIds:p.routineIds.includes(id)?p.routineIds.filter(x=>x!==id):[...p.routineIds,id]}));
-  const isNew=!session.name;
   return h('div',{style:{maxWidth:420,margin:'0 auto',paddingBottom:'4rem'}},
-    h(EH,{isNew,canSave,onSave:()=>onSave(s),onBack,title:isNew?'New Session':'Edit Session'}),
+    h(EH,{canSave,onSave:()=>onSave(s),onBack,title:session.name?'Edit Session':'New Session'}),
     h('div',{style:{padding:'1.25rem 1rem',display:'flex',flexDirection:'column',gap:'1.5rem'}},
       h('div',null,
         h(SL,{text:'Session Name'}),
@@ -277,7 +266,7 @@ function EditSessionView({session,routines,onSave,onBack}){
           :h('div',{style:{display:'flex',flexDirection:'column',gap:8}},
               routines.map(r=>{
                 const sel=s.routineIds.includes(r.id);
-                const ac=modeAccent(r.mode),bg=modeBg(r.mode),tx=modeText(r.mode);
+                const ac=modeAccent(r.mode),bg=modeBg(r.mode);
                 return h('button',{key:r.id,onClick:()=>toggle(r.id),style:{display:'flex',alignItems:'center',gap:12,padding:'12px',background:sel?'rgba(136,131,235,0.08)':C.s2,border:`1px solid ${sel?C.a:C.b}`,borderRadius:12,cursor:'pointer',textAlign:'left',width:'100%'}},
                   h('div',{style:{width:32,height:32,borderRadius:8,background:sel?'rgba(136,131,235,0.18)':bg,display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}},
                     h(Icon,{name:r.mode==='circuit'?'refresh':'list-numbers',style:{fontSize:15,color:sel?C.a:ac}})),
@@ -301,7 +290,7 @@ function SessionDetailView({session,routines,onBack,onStartRoutine}){
       rlist.length===0
         ?h('p',{style:{fontSize:13,color:C.tt,textAlign:'center',padding:'3rem 0'}},'No routines in this session.')
         :rlist.map(r=>{
-            const ac=modeAccent(r.mode),bg=modeBg(r.mode),tx=modeText(r.mode);
+            const ac=modeAccent(r.mode);
             const tot=estTotal(r);
             return h('div',{key:r.id,style:{background:C.s1,border:`1px solid ${C.b}`,borderRadius:12,padding:'1rem'}},
               h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:10}},
@@ -312,12 +301,11 @@ function SessionDetailView({session,routines,onBack,onStartRoutine}){
                       ?h(Fragment,null,h('span',{style:{fontSize:12,color:ac,fontWeight:500}},'Circuit'),h('span',{style:{fontSize:12,color:C.ts}},` · ${r.rounds}r`))
                       :h('span',{style:{fontSize:12,color:ac,fontWeight:500}},'Traditional'),
                     h('span',{style:{fontSize:12,color:C.tt}},'·'),
-                    h('span',{style:{fontSize:12,color:C.ts}},`${r.exercises.length} ex${tot>0?' · ~'+fmtL(tot):''}`))),
-                h('div',{style:{display:'flex',gap:6}})),
+                    h('span',{style:{fontSize:12,color:C.ts}},`${r.exercises.length} ex${tot>0?' · ~'+fmtL(tot):''}`)))),
               h('div',{style:{display:'flex',gap:5,flexWrap:'wrap',marginBottom:12}},
                 r.exercises.map(e=>h('span',{key:e.id,style:pill('rgba(255,255,255,0.05)',C.ts,C.b)},
                   r.mode==='circuit'?e.name||'Exercise':`${e.name||'Exercise'} ×${e.sets}`))),
-              h('button',{onClick:()=>onStartRoutine(r),style:{width:'100%',padding:'11px 0',background:C.a,border:'none',borderRadius:10,color:'#fff',fontSize:14,fontWeight:600,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',gap:6}},
+              h('button',{onClick:()=>onStartRoutine(r),style:{width:'100%',padding:'11px 0',background:C.a,border:'none',borderRadius:10,color:C.t,fontSize:14,fontWeight:600,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',gap:6}},
                 h(Icon,{name:'player-play',style:{fontSize:15}}),'Start'));
           })));
 }
@@ -339,7 +327,7 @@ function TimerView({routine,onBack}){
       if(nt<=0){
         const ni=idx+1;
         if(ni>=seq.length){SFX.done();clearInterval(intRef.current);setSt(s=>({...s,running:false,done:true,tl:0}));}
-        else{const ns=seq[ni];if(ns.type==='rest')(ns.isTrans||ns.isRoundRest?SFX.trans:SFX.rest)();else SFX.work();setSt(s=>({...s,idx:ni,tl:ns.dur||0}));}
+        else{const ns=seq[ni];if(ns.type==='rest')(ns.isRoundRest?SFX.trans:SFX.rest)();else SFX.work();setSt(s=>({...s,idx:ni,tl:ns.dur||0}));}
       }else setSt(s=>({...s,tl:nt}));
     },1000);
     return()=>clearInterval(intRef.current);
@@ -347,7 +335,7 @@ function TimerView({routine,onBack}){
   function advance(){
     const ni=ref.current.idx+1;
     if(ni>=seq.length){SFX.done();setSt(s=>({...s,running:false,done:true}));}
-    else{const ns=seq[ni];(ns.type==='rest'?SFX.rest:SFX.work)();setSt(s=>({...s,idx:ni,tl:ns.dur||0}));}
+    else{const ns=seq[ni];if(ns.type==='rest')(ns.isRoundRest?SFX.trans:SFX.rest)();else SFX.work();setSt(s=>({...s,idx:ni,tl:ns.dur||0}));}
   }
   const toggle=()=>{if(!st.running)SFX.work();setSt(s=>({...s,running:!s.running}));};
   const reset=()=>{clearInterval(intRef.current);setSt({idx:0,tl:seq[0]?.dur||0,running:false,done:false});};
@@ -355,13 +343,13 @@ function TimerView({routine,onBack}){
   const cur=seq[idx],nxt=seq[idx+1];
   const isRest=cur?.type==='rest',isTimed=cur?.timed;
   const accent=done?C.g:isRest?C.r:C.a;
-  const tt=seq.filter(s=>s.timed&&s.dur).reduce((a,s)=>a+s.dur,0);
+  const tt=useRef(seq.filter(s=>s.timed&&s.dur).reduce((a,s)=>a+s.dur,0)).current;
   const td=seq.slice(0,idx).filter(s=>s.timed&&s.dur).reduce((a,s)=>a+s.dur,0)+(cur?.timed&&cur?.dur?cur.dur-tl:0);
   const op=tt>0?Math.min(1,td/tt):0;
   const ns=cur?.label?.length>18?17:cur?.label?.length>12?21:26;
   const nl=nxt?(nxt.type==='rest'?`Rest · ${fmtL(nxt.dur)}`:nxt.reps?`${nxt.label} · ${nxt.reps} reps`:`${nxt.label} · ${fmtL(nxt.dur)}`):null;
   const skipS={padding:'12px 14px',background:'transparent',border:'1px solid rgba(255,255,255,0.15)',borderRadius:10,color:C.ts,fontSize:13,fontWeight:500,cursor:'pointer',display:'flex',alignItems:'center',gap:5,whiteSpace:'nowrap'};
-  return h('div',{style:{maxWidth:420,margin:'0 auto',display:'flex',flexDirection:'column',minHeight:560}},
+  return h('div',{style:{maxWidth:420,margin:'0 auto',display:'flex',flexDirection:'column',minHeight:'100dvh'}},
     h('div',{style:{display:'flex',alignItems:'center',gap:12,padding:'1rem',borderBottom:`1px solid ${C.b}`}},
       h('button',{className:'ib',onClick:onBack},h(Icon,{name:'arrow-left'})),
       h('p',{style:{flex:1,fontWeight:600,fontSize:15,color:C.t}},routine.title||'Routine'),
@@ -402,11 +390,11 @@ function TimerView({routine,onBack}){
 }
 
 // ── Routine Card ──────────────────────────────────────────────────────────────
-function RoutineCard({r,routines,sessions,onPlay,onEdit,onDelete,onAddToSession}){
+function RoutineCard({r,sessions,onPlay,onEdit,onDelete,onAddToSession}){
   const[pickerOpen,setPickerOpen]=useState(false);
   const total=estTotal(r);
   const ac=modeAccent(r.mode);
-  return h('div',{style:{background:C.s1,border:`1px solid ${C.b}`,borderRadius:12,padding:'1rem 1.25rem',position:'relative'}},
+  return h('div',{style:{background:C.s1,border:`1px solid ${C.b}`,borderRadius:12,padding:'1rem 1.25rem'}},
     h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:8}},
       h('div',{style:{flex:1,minWidth:0}},
         h('p',{style:{fontWeight:600,fontSize:16,color:C.t,marginBottom:4}},r.title||'Untitled'),
@@ -419,7 +407,7 @@ function RoutineCard({r,routines,sessions,onPlay,onEdit,onDelete,onAddToSession}
       h('div',{style:{display:'flex',gap:5,flexShrink:0,marginLeft:8}},
         h('button',{className:'ib',title:'Play',onClick:()=>onPlay(r),style:{padding:'7px 9px',color:C.a,borderColor:'rgba(136,131,235,0.3)'}},h(Icon,{name:'player-play',style:{fontSize:18}})),
         h('button',{className:'ib',title:'Edit',onClick:()=>onEdit(r),style:{padding:'7px 9px'}},h(Icon,{name:'edit',style:{fontSize:18}})),
-        h('button',{className:'ib',title:'Add to session',onClick:()=>setPickerOpen(o=>!o),style:{padding:'7px 9px',color:T['tangerine-text'],borderColor:'rgba(224,128,74,0.3)'}},h(Icon,{name:'folder',style:{fontSize:18}})),
+        h('button',{className:'ib',title:'Add to session',onClick:()=>setPickerOpen(o=>!o),style:{padding:'7px 9px',color:C.tr,borderColor:'rgba(224,128,74,0.3)'}},h(Icon,{name:'folder',style:{fontSize:18}})),
         h('button',{className:'ib',title:'Delete',onClick:()=>onDelete(r.id),style:{padding:'7px 9px',color:C.danger,borderColor:'rgba(217,79,79,0.3)'}},h(Icon,{name:'trash',style:{fontSize:18}})))),
     h('div',{style:{display:'flex',gap:5,flexWrap:'wrap'}},
       r.exercises.map(e=>h('span',{key:e.id,style:pill('rgba(255,255,255,0.05)',C.ts,C.b)},
@@ -439,7 +427,7 @@ function RoutineCard({r,routines,sessions,onPlay,onEdit,onDelete,onAddToSession}
 // ── Session Card ──────────────────────────────────────────────────────────────
 function SessionCard({s,routines,onOpen,onEdit,onDelete}){
   const rlist=s.routineIds.map(id=>routines.find(r=>r.id===id)).filter(Boolean);
-  return h('div',{key:s.id,onClick:onOpen,style:{background:C.s1,border:`1px solid ${C.b}`,borderRadius:12,padding:'1rem 1.25rem',cursor:'pointer'}},
+  return h('div',{onClick:onOpen,style:{background:C.s1,border:`1px solid ${C.b}`,borderRadius:12,padding:'1rem 1.25rem',cursor:'pointer'}},
     h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:6}},
       h('div',null,
         h('p',{style:{fontWeight:600,fontSize:16,color:C.t,marginBottom:4}},s.name||'Untitled Session'),
@@ -451,24 +439,16 @@ function SessionCard({s,routines,onOpen,onEdit,onDelete}){
       rlist.map(r=>h('span',{key:r.id,style:pill('rgba(255,255,255,0.05)',C.ts,C.b)},r.title))));
 }
 
-
 // ── Group Row ─────────────────────────────────────────────────────────────────
-function GroupRow({group,routines,sessions,onPlay,onEdit,onDelete,onAddToSession,onRenameGroup,onDeleteGroup,draggingId,dropTarget}){
+function GroupRow({group,routines,sessions,onPlay,onEdit,onDelete,onAddToSession,onRenameGroup,onDeleteGroup,onToggleCollapse}){
   const[collapsed,setCollapsed]=useState(group.collapsed||false);
   const[editing,setEditing]=useState(false);
   const[name,setName]=useState(group.title);
   const members=group.routineIds.map(id=>routines.find(r=>r.id===id)).filter(Boolean);
   const commitName=()=>{setEditing(false);if(name.trim())onRenameGroup(group.id,name.trim());else setName(group.title);};
-  const isDropTarget=dropTarget&&dropTarget.id===group.id;
-  return h('div',{style:{display:'flex',flexDirection:'column',gap:6},'data-zone-id':group.id,'data-zone-type':'group'},
-    h('div',{
-
-      style:{display:'flex',alignItems:'center',gap:8,padding:'8px 10px',
-        background:isDropTarget?'rgba(136,131,235,0.10)':C.s2,
-        border:`1px solid ${isDropTarget?C.a:C.b}`,
-        borderRadius:10,transition:'border-color 0.15s,background 0.15s',
-        opacity:draggingId===group.id?0.4:1}},
-      h('button',{onClick:()=>setCollapsed(c=>!c),style:{background:'none',border:'none',cursor:'pointer',padding:'2px 4px',display:'flex',alignItems:'center'}},
+  return h('div',{style:{display:'flex',flexDirection:'column',gap:6}},
+    h('div',{style:{display:'flex',alignItems:'center',gap:8,padding:'8px 10px',background:C.s2,border:`1px solid ${C.b}`,borderRadius:10}},
+      h('button',{onClick:()=>{const next=!collapsed;setCollapsed(next);onToggleCollapse(next);},style:{background:'none',border:'none',cursor:'pointer',padding:'2px 4px',display:'flex',alignItems:'center'}},
         h(Icon,{name:'chevron-down',style:{fontSize:14,color:C.ts,transform:collapsed?'rotate(-90deg)':'rotate(0deg)',transition:'transform 0.2s'}})),
       editing
         ?h('input',{autoFocus:true,value:name,onChange:e=>setName(e.target.value),onBlur:commitName,
@@ -480,104 +460,44 @@ function GroupRow({group,routines,sessions,onPlay,onEdit,onDelete,onAddToSession
           style:{padding:'3px 6px',color:C.danger,borderColor:'rgba(240,96,96,0.2)',flexShrink:0}},
         h(Icon,{name:'x',style:{fontSize:12}}))),
     !collapsed&&h('div',{style:{display:'flex',flexDirection:'column',gap:6,paddingLeft:12,borderLeft:`2px solid ${C.b}`}},
-      members.map(r=>h('div',{key:r.id,'data-zone-id':r.id,'data-zone-type':'routine','data-group-id':group.id,
-          style:{opacity:draggingId===r.id?0.3:1,transition:'opacity 0.15s',
-            outline:dropTarget&&dropTarget.id===r.id?`2px solid ${C.a}`:'2px solid transparent',borderRadius:12}},
-        h(RoutineCard,{r,routines,sessions,onPlay,onEdit,onDelete,onAddToSession,
-          onLongPress:()=>onLongPress(r.id,'routine')}))),
-      members.length===0&&h('p',{style:{fontSize:12,color:C.tt,padding:'8px 4px',fontStyle:'italic'}},'Drag a routine here')));
+      members.map(r=>h(RoutineCard,{key:r.id,r,sessions,onPlay,onEdit,onDelete,onAddToSession})),
+      members.length===0&&h('p',{style:{fontSize:12,color:C.tt,padding:'8px 4px',fontStyle:'italic'}},'Use the folder icon on a routine to add it here')));
 }
 
 // ── Home ──────────────────────────────────────────────────────────────────────
-function HomeView({routines,sessions,groups,tab,setTab,onNewRoutine,onEditRoutine,onDeleteRoutine,onPlayRoutine,onAddToSession,onNewSession,onEditSession,onDeleteSession,onOpenSession,onNewGroup,onRenameGroup,onDeleteGroup,onReorder}){
+function HomeView({routines,sessions,groups,tab,setTab,onNewRoutine,onEditRoutine,onDeleteRoutine,onPlayRoutine,onAddToSession,onNewSession,onEditSession,onDeleteSession,onOpenSession,onNewGroup,onRenameGroup,onDeleteGroup,onToggleCollapse}){
   const tabStyle=active=>({color:active?C.a:C.ts,borderBottomColor:active?C.a:'transparent'});
-  // ── touch/mouse drag state ──
-  const[drag,setDrag]=useState(null);
-  const[dropTarget,setDropTarget]=useState(null);
-  const listRef=useRef(null);
   const groupedIds=groups.flatMap(g=>g.routineIds);
   const ungrouped=routines.filter(r=>!groupedIds.includes(r.id));
-  // find drop zone from point
-  function zoneAt(x,y){
-    const els=listRef.current?Array.from(listRef.current.querySelectorAll('[data-zone-id]')):[];
-    // walk in reverse (innermost first) — find deepest element whose rect contains the point
-    for(let i=els.length-1;i>=0;i--){
-      const el=els[i];
-      const rect=el.getBoundingClientRect();
-      if(y>=rect.top&&y<=rect.bottom&&x>=rect.left&&x<=rect.right){
-        return{id:el.dataset.zoneId,type:el.dataset.zoneType,groupId:el.dataset.groupId||null};
-      }
-    }
-    return null;
-  }
-  function startDrag(id,type){
-    setDrag({id,type});
-  }
-  function onPointerMove(e){
-    if(!drag)return;
-    const cy=e.touches?e.touches[0].clientY:e.clientY;
-    const cx=e.touches?e.touches[0].clientX:e.clientX;
-    const zone=zoneAt(cx,cy);
-    setDropTarget(zone&&zone.id!==drag.id?zone:null);
-  }
-  function onPointerUp(e){
-    if(!drag){return;}
-    if(dropTarget)onReorder(drag.type,drag.id,dropTarget.type,dropTarget.id,dropTarget.groupId);
-    setDrag(null);setDropTarget(null);
-  }
-  // ghost label
-  // attach move/up to window so release outside div still fires
-  useEffect(()=>{
-    if(!drag)return;
-    const mm=e=>onPointerMove(e);
-    const mu=e=>onPointerUp(e);
-    const tm=e=>{e.preventDefault();onPointerMove(e);};
-    const tu=e=>onPointerUp(e);
-    window.addEventListener('mousemove',mm);
-    window.addEventListener('mouseup',mu);
-    window.addEventListener('touchmove',tm,{passive:false});
-    window.addEventListener('touchend',tu);
-    return()=>{
-      window.removeEventListener('mousemove',mm);
-      window.removeEventListener('mouseup',mu);
-      window.removeEventListener('touchmove',tm);
-      window.removeEventListener('touchend',tu);
-    };
-  },[drag]);
-  return h('div',{style:{padding:'1.5rem 1rem 3rem',maxWidth:420,margin:'0 auto',userSelect:drag?'none':'auto'}},
-
+  return h('div',{style:{padding:'1.5rem 1rem 3rem',maxWidth:420,margin:'0 auto'}},
     h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:'1rem'}},
       h('h1',{style:{fontSize:22,fontWeight:600,color:C.t}},'Workout Timer'),
       h('button',{className:'ib',onClick:tab==='routines'?onNewRoutine:onNewSession,style:{padding:'8px 14px',gap:6,color:C.t,borderColor:C.bhi}},
         h(Icon,{name:'plus',style:{fontSize:15}}),' New')),
-    h('div',{style:{display:'flex',borderBottom:`1px solid ${C.b}`,marginBottom:0}},
+    h('div',{style:{display:'flex',borderBottom:`1px solid ${C.b}`}},
       h('button',{className:'tab',onClick:()=>setTab('routines'),style:tabStyle(tab==='routines')},`Routines (${routines.length})`),
       h('button',{className:'tab',onClick:()=>setTab('sessions'),style:tabStyle(tab==='sessions')},`Sessions (${sessions.length})`)),
     tab==='routines'&&h('button',{onClick:onNewGroup,style:{width:'100%',padding:'8px 0',background:'transparent',border:'none',borderBottom:`1px solid ${C.b}`,color:C.tt,fontSize:12,fontWeight:500,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',gap:5,marginBottom:'1.25rem',letterSpacing:'0.03em'}},
       h(Icon,{name:'plus',style:{fontSize:12}}),'New Group'),
-    tab!=='routines'&&h('div',{style:{marginBottom:'1.25rem'}}),
     tab==='routines'
       ?(routines.length===0
           ?h('div',{style:{textAlign:'center',padding:'5rem 1rem'}},
               h(Icon,{name:'dumbbell',style:{fontSize:48,display:'block',marginBottom:16,opacity:0.18,color:C.t}}),
               h('p',{style:{fontSize:15,fontWeight:500,color:C.t,marginBottom:4}},'No routines yet'),
               h('p',{style:{fontSize:13,color:C.ts}},'Tap "New" to build your first routine'))
-          :h('div',{ref:listRef,style:{display:'flex',flexDirection:'column',gap:10}},
+          :h('div',{style:{display:'flex',flexDirection:'column',gap:10}},
               groups.map(g=>h(GroupRow,{key:g.id,group:g,routines,sessions,
                 onPlay:onPlayRoutine,onEdit:onEditRoutine,onDelete:onDeleteRoutine,onAddToSession,
                 onRenameGroup,onDeleteGroup,
-
-                draggingId:drag?drag.id:null,dropTarget})),
-              ungrouped.map(r=>h('div',{key:r.id,'data-zone-id':r.id,'data-zone-type':'routine',
-                  style:{outline:dropTarget&&dropTarget.id===r.id?`2px solid ${C.a}`:'2px solid transparent',borderRadius:12,opacity:drag&&drag.id===r.id?0.3:1,transition:'opacity 0.15s'}},
-                h(RoutineCard,{r,routines,sessions,onPlay:onPlayRoutine,onEdit:onEditRoutine,onDelete:onDeleteRoutine,onAddToSession,
-                  onLongPress:()=>void 0})))))
+                onToggleCollapse:v=>onToggleCollapse(g.id,v)})),
+              ungrouped.map(r=>h(RoutineCard,{key:r.id,r,sessions,
+                onPlay:onPlayRoutine,onEdit:onEditRoutine,onDelete:onDeleteRoutine,onAddToSession}))))
       :(sessions.length===0
-          ?h('div',{style:{textAlign:'center',padding:'5rem 1rem'}},
+          ?h('div',{style:{textAlign:'center',padding:'5rem 1rem',marginTop:'1.25rem'}},
               h(Icon,{name:'layout-list',style:{fontSize:48,display:'block',marginBottom:16,opacity:0.18,color:C.t}}),
               h('p',{style:{fontSize:15,fontWeight:500,color:C.t,marginBottom:4}},'No sessions yet'),
               h('p',{style:{fontSize:13,color:C.ts}},'Tap "New" to build your first session'))
-          :h('div',{style:{display:'flex',flexDirection:'column',gap:10}},
+          :h('div',{style:{display:'flex',flexDirection:'column',gap:10,marginTop:'1.25rem'}},
               sessions.map(s=>h(SessionCard,{key:s.id,s,routines,onOpen:()=>onOpenSession(s),onEdit:onEditSession,onDelete:onDeleteSession})))));
 }
 
@@ -622,58 +542,10 @@ function App(){
       ?{...s,routineIds:add?[...s.routineIds.filter(x=>x!==routineId),routineId]:s.routineIds.filter(x=>x!==routineId)}
       :s));
   };
-  const newGroup=()=>setGroups(p=>[...p,{id:uid(),title:'New Group',routineIds:[],collapsed:false}]);
+  const toggleCollapse=(id,v)=>setGroups(p=>p.map(g=>g.id===id?{...g,collapsed:v}:g));
+  const newGroup=()=>setGroups(p=>[...p,{id:uid(),title:'New Group',routineIds:[]}]);
   const renameGroup=(id,title)=>setGroups(p=>p.map(g=>g.id===id?{...g,title}:g));
   const deleteGroup=id=>setGroups(p=>p.filter(g=>g.id!==id));
-  const removeFromGroup=(groupId,routineId)=>setGroups(p=>p.map(g=>g.id===groupId?{...g,routineIds:g.routineIds.filter(x=>x!==routineId)}:g)); // routines become ungrouped
-  const handleReorder=(srcType,srcId,tgtType,tgtId,tgtGroupId)=>{
-    setGroups(pg=>{
-      // helper: remove srcId from all groups
-      const stripped=pg.map(g=>({...g,routineIds:g.routineIds.filter(x=>x!==srcId)}));
-      if(srcType==='routine'&&tgtType==='group'){
-        // drop onto group header → append to that group
-        return stripped.map(g=>g.id===tgtId?{...g,routineIds:[...g.routineIds,srcId]}:g);
-      }
-      if(srcType==='routine'&&tgtType==='routine'){
-        const tgtGroup=stripped.find(g=>g.routineIds.includes(tgtId));
-        if(tgtGroup){
-          // insert into tgt's group before tgtId
-          return stripped.map(g=>{
-            if(g.id!==tgtGroup.id)return g;
-            const ids=[...g.routineIds];
-            const ti=ids.indexOf(tgtId);
-            ids.splice(ti,0,srcId);
-            return{...g,routineIds:ids};
-          });
-        } else {
-          // tgt is ungrouped — move src to ungrouped (remove from any group, done by stripped)
-          // reorder handled below in setRoutines
-          return stripped;
-        }
-      }
-      if(srcType==='group'&&tgtType==='group'){
-        const arr=stripped.filter(g=>g.id!==srcId);
-        const orig=pg.find(g=>g.id===srcId);
-        const ti=arr.findIndex(g=>g.id===tgtId);
-        arr.splice(ti,0,orig);
-        return arr;
-      }
-      return stripped;
-    });
-    // reorder ungrouped routines when dropping routine onto ungrouped routine
-    if(srcType==='routine'&&tgtType==='routine'){
-      setRoutines(p=>{
-        const tgtInGroup=groups.some(g=>g.routineIds.includes(tgtId));
-        if(tgtInGroup)return p;
-        const src=p.find(r=>r.id===srcId);
-        if(!src)return p;
-        const arr=[...p.filter(r=>r.id!==srcId)];
-        const ti=arr.findIndex(r=>r.id===tgtId);
-        if(ti>=0)arr.splice(ti,0,src);else arr.push(src);
-        return arr;
-      });
-    }
-  };
 
   if(view==='editRoutine')return h(EditRoutineView,{routine:editingRoutine,onSave:persistRoutine,onBack:()=>setView('home')});
   if(view==='editSession')return h(EditSessionView,{session:editingSession,routines,onSave:persistSession,onBack:()=>setView('home')});
@@ -690,7 +562,7 @@ function App(){
     onEditSession:s=>{setEditingSession(JSON.parse(JSON.stringify(s)));setView('editSession');},
     onDeleteSession:deleteSession,
     onOpenSession:s=>{setActiveSession(s);setHomeTab('sessions');setView('sessionDetail');},
-    onNewGroup:newGroup,onRenameGroup:renameGroup,onDeleteGroup:deleteGroup,onReorder:handleReorder,
+    onNewGroup:newGroup,onRenameGroup:renameGroup,onDeleteGroup:deleteGroup,onToggleCollapse:toggleCollapse,
   });
 }
 
