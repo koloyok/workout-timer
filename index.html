@@ -11,6 +11,8 @@ input[type=range]{accent-color:#8883EB;width:100%}
 input[type=number]{-moz-appearance:textfield;outline:none}
 input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none}
 input:focus{outline:none;border-color:rgba(255,255,255,0.28)!important}
+select{outline:none;cursor:pointer}
+select:focus{border-color:rgba(255,255,255,0.28)!important}
 .ib{background:transparent;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:7px 9px;cursor:pointer;color:#666;font-size:17px;line-height:1;display:flex;align-items:center}
 .ib:hover{border-color:rgba(255,255,255,0.22);color:#bbb}
 .tog{display:flex;background:#1a1a1a;border-radius:7px;border:1px solid rgba(255,255,255,0.08);overflow:hidden;flex-shrink:0}
@@ -19,7 +21,7 @@ input:focus{outline:none;border-color:rgba(255,255,255,0.28)!important}
 </style>
 </head>
 <body>
-<svg xmlns="http://www.w3.org/2000/svg" style="display:none"><symbol id="ti-arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l14 0"/><path d="M5 12l6 6"/><path d="M5 12l6 -6"/></symbol><symbol id="ti-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5l10 -10"/></symbol><symbol id="ti-dumbbell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.026 9.61l-.95 -4.18a2 2 0 0 1 1.95 -2.43h8a2 2 0 0 1 2 2.43l-1 4.2"/><path d="M9.026 17.001h6"/><path d="M18.906 20.06a7.92 7.92 0 0 0 1 -5.33a8 8 0 1 0 -14.77 5.33a2 2 0 0 0 1.71 .94h10.36a2 2 0 0 0 1.7 -.94"/></symbol><symbol id="ti-edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415"/><path d="M16 5l3 3"/></symbol><symbol id="ti-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2"/></symbol><symbol id="ti-layout-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2l0 -2"/><path d="M4 16a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2l0 -2"/></symbol><symbol id="ti-list-numbers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 6h9"/><path d="M11 12h9"/><path d="M12 18h8"/><path d="M4 16a2 2 0 1 1 4 0c0 .591 -.5 1 -1 1.5l-3 2.5h4"/><path d="M6 10v-6l-2 2"/></symbol><symbol id="ti-minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l14 0"/></symbol><symbol id="ti-player-pause" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1l0 -12"/><path d="M14 6a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1l0 -12"/></symbol><symbol id="ti-player-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v16l13 -8l-13 -8"/></symbol><symbol id="ti-player-skip-forward" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5v14l12 -7l-12 -7"/><path d="M20 5l0 14"/></symbol><symbol id="ti-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5l0 14"/><path d="M5 12l14 0"/></symbol><symbol id="ti-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"/><path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/></symbol><symbol id="ti-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></symbol><symbol id="ti-trophy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21l8 0"/><path d="M12 17l0 4"/><path d="M7 4l10 0"/><path d="M17 4v8a5 5 0 0 1 -10 0v-8"/><path d="M3 9a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M17 9a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/></symbol><symbol id="ti-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6l6 -6"/></symbol><symbol id="ti-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></symbol></svg>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none"><symbol id="ti-arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l14 0"/><path d="M5 12l6 6"/><path d="M5 12l6 -6"/></symbol><symbol id="ti-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5l10 -10"/></symbol><symbol id="ti-dumbbell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.026 9.61l-.95 -4.18a2 2 0 0 1 1.95 -2.43h8a2 2 0 0 1 2 2.43l-1 4.2"/><path d="M9.026 17.001h6"/><path d="M18.906 20.06a7.92 7.92 0 0 0 1 -5.33a8 8 0 1 0 -14.77 5.33a2 2 0 0 0 1.71 .94h10.36a2 2 0 0 0 1.7 -.94"/></symbol><symbol id="ti-edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415"/><path d="M16 5l3 3"/></symbol><symbol id="ti-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2"/></symbol><symbol id="ti-layout-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2l0 -2"/><path d="M4 16a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2l0 -2"/></symbol><symbol id="ti-list-numbers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 6h9"/><path d="M11 12h9"/><path d="M12 18h8"/><path d="M4 16a2 2 0 1 1 4 0c0 .591 -.5 1 -1 1.5l-3 2.5h4"/><path d="M6 10v-6l-2 2"/></symbol><symbol id="ti-minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l14 0"/></symbol><symbol id="ti-player-pause" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1l0 -12"/><path d="M14 6a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1l0 -12"/></symbol><symbol id="ti-player-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v16l13 -8l-13 -8"/></symbol><symbol id="ti-player-skip-forward" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5v14l12 -7l-12 -7"/><path d="M20 5l0 14"/></symbol><symbol id="ti-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5l0 14"/><path d="M5 12l14 0"/></symbol><symbol id="ti-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"/><path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/></symbol><symbol id="ti-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></symbol><symbol id="ti-trophy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21l8 0"/><path d="M12 17l0 4"/><path d="M7 4l10 0"/><path d="M17 4v8a5 5 0 0 1 -10 0v-8"/><path d="M3 9a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M17 9a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/></symbol><symbol id="ti-chevron-up" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 15l6 -6l6 6"/></symbol><symbol id="ti-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6l6 -6"/></symbol><symbol id="ti-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></symbol></svg>
 <div id="root" style="background:#111;color:#f0f0f0;font-family:system-ui,-apple-system,sans-serif">
   <div style="display:flex;align-items:center;justify-content:center;height:100dvh;color:#444;font-size:14px">Loading…</div>
 </div>
@@ -202,8 +204,10 @@ const modeAccent=m=>m==='circuit'?C.ci:C.tr;
 const modeBg=m=>m==='circuit'?C.cibg:C.trbg;
 
 // ── Edit Routine ──────────────────────────────────────────────────────────────
-function EditRoutineView({routine,onSave,onBack}){
+function EditRoutineView({routine,groups,onSave,onBack}){
   const[r,setR]=useState(routine);
+  const currentGroupId=(groups||[]).find(g=>g.routineIds.includes(routine.id))?.id||null;
+  const[groupId,setGroupId]=useState(currentGroupId);
   const upEx=(id,f,v)=>setR(p=>({...p,exercises:p.exercises.map(e=>e.id===id?{...e,[f]:v}:e)}));
   const canSave=r.title.trim()&&r.exercises.length>0&&r.exercises.every(e=>e.name.trim());
   const total=estTotal(r);
@@ -214,13 +218,18 @@ function EditRoutineView({routine,onSave,onBack}){
       :{...p,mode:'traditional',exercises:[newTradEx()]});
   };
   return h('div',{style:{maxWidth:420,margin:'0 auto',paddingBottom:'4rem'}},
-    h(EH,{canSave,onSave:()=>onSave(r),onBack,title:routine.title?'Edit Routine':'New Routine'}),
+    h(EH,{canSave,onSave:()=>onSave(r,groupId),onBack,title:routine.title?'Edit Routine':'New Routine'}),
     h('div',{style:{padding:'1.25rem 1rem',display:'flex',flexDirection:'column',gap:'1.5rem'}},
       h('div',null,
         h(SL,{text:'Workout Type'}),
         h('div',{className:'tog',style:{width:'100%'}},
           h('button',{className:'tbtn',onClick:()=>switchMode('traditional'),style:{flex:1,padding:'8px 0',background:r.mode==='traditional'?C.tr:'transparent',color:r.mode==='traditional'?C.trt:C.ts}},'Traditional'),
           h('button',{className:'tbtn',onClick:()=>switchMode('circuit'),style:{flex:1,padding:'8px 0',background:r.mode==='circuit'?C.ci:'transparent',color:r.mode==='circuit'?C.cit:C.ts}},'Circuit'))),
+      groups&&groups.length>0&&h('div',null,
+        h(SL,{text:'Group'}),
+        h('select',{value:groupId||'',onChange:e=>setGroupId(e.target.value||null),style:{width:'100%',padding:'10px 13px',fontSize:15,borderRadius:9,border:`1px solid ${C.b}`,background:C.inp,color:C.t,fontFamily:'inherit',appearance:'none',WebkitAppearance:'none'}},
+          h('option',{value:''},'None'),
+          groups.map(g=>h('option',{key:g.id,value:g.id},g.title)))),
       h('div',null,
         h(SL,{text:'Routine Title'}),
         h('input',{value:r.title,onChange:e=>setR(p=>({...p,title:e.target.value})),placeholder:r.mode==='circuit'?'e.g. Strength, Mobility, Cardio…':'e.g. Push, Pull, Legs…',style:{width:'100%',padding:'10px 13px',fontSize:15,borderRadius:9,border:`1px solid ${C.b}`,background:C.inp,color:C.t}})),
@@ -367,7 +376,7 @@ function TimerView({routine,onBack}){
             h('h2',{style:{fontSize:ns,fontWeight:600,textAlign:'center',color:isRest?C.r:C.t,lineHeight:1.2,maxWidth:280}},cur?.label),
             isTimed
               ?h('div',{style:{position:'relative',display:'inline-flex',alignItems:'center',justifyContent:'center'}},
-                  h(Ring,{progress:cur.dur?tl/cur.dur:1,color:accent}),
+                  h(Ring,{progress:cur.dur?(running?Math.max(0,(tl-1)/cur.dur):tl/cur.dur):0,color:accent}),
                   h('div',{style:{position:'absolute',textAlign:'center'}},
                     h('div',{style:{fontSize:46,fontWeight:600,color:C.t,lineHeight:1,fontFamily:'monospace'}},fmt(tl)),
                     h('div',{style:{fontSize:11,color:C.tt,marginTop:5,letterSpacing:'0.07em'}},tl<60?'SECONDS':'REMAINING')))
@@ -398,7 +407,7 @@ function RoutineCard({r,sessions,onPlay,onEdit,onDelete,onAddToSession}){
     h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:8}},
       h('div',{style:{flex:1,minWidth:0}},
         h('p',{style:{fontWeight:600,fontSize:16,color:C.t,marginBottom:4}},r.title||'Untitled'),
-        h('div',{style:{display:'flex',gap:8,alignItems:'center'}},
+        h('div',{style:{display:'flex',gap:6,alignItems:'center',flexWrap:'wrap'}},
           r.mode==='circuit'
             ?h(Fragment,null,h('span',{style:{fontSize:12,color:ac,fontWeight:500}},'Circuit'),h('span',{style:{fontSize:12,color:C.ts}},` · ${r.rounds}r`))
             :h('span',{style:{fontSize:12,color:ac,fontWeight:500}},'Traditional'),
@@ -428,14 +437,12 @@ function RoutineCard({r,sessions,onPlay,onEdit,onDelete,onAddToSession}){
 function SessionCard({s,routines,onOpen,onEdit,onDelete}){
   const rlist=s.routineIds.map(id=>routines.find(r=>r.id===id)).filter(Boolean);
   return h('div',{onClick:onOpen,style:{background:C.s1,border:`1px solid ${C.b}`,borderRadius:12,padding:'1rem 1.25rem',cursor:'pointer'}},
-    h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:6}},
-      h('div',null,
-        h('p',{style:{fontWeight:600,fontSize:16,color:C.t,marginBottom:4}},s.name||'Untitled Session'),
-        h('p',{style:{fontSize:12,color:C.ts}},`${s.routineIds.length} routine${s.routineIds.length!==1?'s':''}`)),
-      h('div',{style:{display:'flex',gap:6},onClick:e=>e.stopPropagation()},
-        h('button',{className:'ib',onClick:e=>{e.stopPropagation();onEdit(s);},style:{padding:'5px 7px'}},h(Icon,{name:'edit',style:{fontSize:14}})),
-        h('button',{className:'ib',onClick:e=>{e.stopPropagation();onDelete(s.id);},style:{padding:'5px 7px',color:C.danger,borderColor:'rgba(240,96,96,0.3)'}},h(Icon,{name:'trash',style:{fontSize:14}})))),
-    rlist.length>0&&h('div',{style:{display:'flex',gap:5,flexWrap:'wrap',marginTop:4}},
+    h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:rlist.length>0?8:0}},
+      h('p',{style:{fontWeight:600,fontSize:16,color:C.t}},s.name||'Untitled Session'),
+      h('div',{style:{display:'flex',gap:5,flexShrink:0,marginLeft:8},onClick:e=>e.stopPropagation()},
+        h('button',{className:'ib',onClick:e=>{e.stopPropagation();onEdit(s);},style:{padding:'7px 9px'}},h(Icon,{name:'edit',style:{fontSize:18}})),
+        h('button',{className:'ib',onClick:e=>{e.stopPropagation();onDelete(s.id);},style:{padding:'7px 9px',color:C.danger,borderColor:'rgba(217,79,79,0.3)'}},h(Icon,{name:'trash',style:{fontSize:18}})))),
+    rlist.length>0&&h('div',{style:{display:'flex',gap:5,flexWrap:'wrap'}},
       rlist.map(r=>h('span',{key:r.id,style:pill('rgba(255,255,255,0.05)',C.ts,C.b)},r.title))));
 }
 
@@ -447,58 +454,105 @@ function GroupRow({group,routines,sessions,onPlay,onEdit,onDelete,onAddToSession
   const members=group.routineIds.map(id=>routines.find(r=>r.id===id)).filter(Boolean);
   const commitName=()=>{setEditing(false);if(name.trim())onRenameGroup(group.id,name.trim());else setName(group.title);};
   return h('div',{style:{display:'flex',flexDirection:'column',gap:6}},
-    h('div',{style:{display:'flex',alignItems:'center',gap:8,padding:'8px 10px',background:C.s2,border:`1px solid ${C.b}`,borderRadius:10}},
-      h('button',{onClick:()=>{const next=!collapsed;setCollapsed(next);onToggleCollapse(next);},style:{background:'none',border:'none',cursor:'pointer',padding:'2px 4px',display:'flex',alignItems:'center'}},
-        h(Icon,{name:'chevron-down',style:{fontSize:14,color:C.ts,transform:collapsed?'rotate(-90deg)':'rotate(0deg)',transition:'transform 0.2s'}})),
-      editing
-        ?h('input',{autoFocus:true,value:name,onChange:e=>setName(e.target.value),onBlur:commitName,
-            onKeyDown:e=>{if(e.key==='Enter')commitName();if(e.key==='Escape'){setEditing(false);setName(group.title);}},
-            style:{flex:1,background:'transparent',border:'none',borderBottom:`1px solid ${C.a}`,color:C.t,fontSize:13,fontWeight:600,outline:'none',padding:'1px 2px'}})
-        :h('span',{onDoubleClick:()=>setEditing(true),style:{flex:1,fontSize:13,fontWeight:600,color:C.t,cursor:'text',userSelect:'none'}},group.title),
-      h('span',{style:{fontSize:11,color:C.tt,marginRight:4}},members.length),
-      h('button',{className:'ib',title:'Delete group',onClick:()=>onDeleteGroup(group.id),
-          style:{padding:'3px 6px',color:C.danger,borderColor:'rgba(240,96,96,0.2)',flexShrink:0}},
-        h(Icon,{name:'x',style:{fontSize:12}}))),
+    h('div',{style:{background:C.s2,border:`1px solid ${C.b}`,borderRadius:10,padding:'8px 10px'}},
+      h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:members.length>0?8:0}},
+        h('div',{style:{display:'flex',alignItems:'center',gap:8,flex:1,minWidth:0}},
+          h('button',{onClick:()=>{const next=!collapsed;setCollapsed(next);onToggleCollapse(next);},style:{background:'none',border:'none',cursor:'pointer',padding:'2px 4px',display:'flex',alignItems:'center',flexShrink:0}},
+            h(Icon,{name:'chevron-down',style:{fontSize:14,color:C.ts,transform:collapsed?'rotate(-90deg)':'rotate(0deg)',transition:'transform 0.2s'}})),
+          editing
+            ?h('input',{autoFocus:true,value:name,onChange:e=>setName(e.target.value),onBlur:commitName,
+                onKeyDown:e=>{if(e.key==='Enter')commitName();if(e.key==='Escape'){setEditing(false);setName(group.title);}},
+                style:{flex:1,background:'transparent',border:'none',borderBottom:`1px solid ${C.a}`,color:C.t,fontSize:16,fontWeight:600,outline:'none',padding:'1px 2px'}})
+            :h('span',{onDoubleClick:()=>setEditing(true),style:{flex:1,fontSize:16,fontWeight:600,color:C.t,cursor:'text',userSelect:'none'}},group.title)),
+        h('button',{className:'ib',title:'Delete group',onClick:()=>onDeleteGroup(group.id),style:{padding:'7px 9px',color:C.danger,borderColor:'rgba(217,79,79,0.3)',flexShrink:0}},
+          h(Icon,{name:'trash',style:{fontSize:18}}))),
+      members.length>0&&h('div',{style:{display:'flex',gap:5,flexWrap:'wrap'}},
+        members.map(r=>h('span',{key:r.id,style:pill('rgba(255,255,255,0.05)',C.ts,C.b)},r.title||'Untitled')))),
     !collapsed&&h('div',{style:{display:'flex',flexDirection:'column',gap:6,paddingLeft:12,borderLeft:`2px solid ${C.b}`}},
       members.map(r=>h(RoutineCard,{key:r.id,r,sessions,onPlay,onEdit,onDelete,onAddToSession})),
-      members.length===0&&h('p',{style:{fontSize:12,color:C.tt,padding:'8px 4px',fontStyle:'italic'}},'Use the folder icon on a routine to add it here')));
+      members.length===0&&h('p',{style:{fontSize:12,color:C.tt,padding:'8px 4px',fontStyle:'italic'}},'Edit a routine and assign it to this group')));
 }
 
 // ── Home ──────────────────────────────────────────────────────────────────────
-function HomeView({routines,sessions,groups,tab,setTab,onNewRoutine,onEditRoutine,onDeleteRoutine,onPlayRoutine,onAddToSession,onNewSession,onEditSession,onDeleteSession,onOpenSession,onNewGroup,onRenameGroup,onDeleteGroup,onToggleCollapse}){
+function HomeView({routines,sessions,groups,tab,setTab,onNewRoutine,onEditRoutine,onDeleteRoutine,onPlayRoutine,onAddToSession,onNewSession,onEditSession,onDeleteSession,onOpenSession,onNewGroup,onRenameGroup,onDeleteGroup,onToggleCollapse,onReorderRoutines,onReorderGroups,onReorderSessions}){
   const tabStyle=active=>({color:active?C.a:C.ts,borderBottomColor:active?C.a:'transparent'});
+  const[reordering,setReordering]=useState(false);
   const groupedIds=groups.flatMap(g=>g.routineIds);
   const ungrouped=routines.filter(r=>!groupedIds.includes(r.id));
+
+  // build top-level routines order: groups first then ungrouped
+  const topItems=[...groups.map(g=>({type:'group',id:g.id})),...ungrouped.map(r=>({type:'routine',id:r.id}))];
+
+  function moveItem(arr,i,dir){
+    const n=arr.length;const j=i+dir;
+    if(j<0||j>=n)return arr;
+    const a=[...arr];[a[i],a[j]]=[a[j],a[i]];return a;
+  }
+
+  function moveTop(idx,dir){
+    const moved=moveItem(topItems,idx,dir);
+    const newGroups=moved.filter(x=>x.type==='group').map(x=>groups.find(g=>g.id===x.id));
+    const newUngrouped=moved.filter(x=>x.type==='routine').map(x=>ungrouped.find(r=>r.id===x.id));
+    onReorderGroups(newGroups);
+    onReorderRoutines(newUngrouped,groupedIds);
+  }
+
+  const updownBtn=(onClick,disabled)=>({className:'ib',onClick,style:{padding:'7px 10px',opacity:disabled?0.25:1,pointerEvents:disabled?'none':'auto'}});
+
   return h('div',{style:{padding:'1.5rem 1rem 3rem',maxWidth:420,margin:'0 auto'}},
     h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:'1rem'}},
       h('h1',{style:{fontSize:22,fontWeight:600,color:C.t}},'Workout Timer'),
-      h('button',{className:'ib',onClick:tab==='routines'?onNewRoutine:onNewSession,style:{padding:'8px 14px',gap:6,color:C.t,borderColor:C.bhi}},
-        h(Icon,{name:'plus',style:{fontSize:15}}),' New')),
+      h('div',{style:{display:'flex',gap:8,alignItems:'center'}},
+        reordering
+          ?h('button',{onClick:()=>setReordering(false),style:{padding:'7px 16px',background:C.a,border:'none',borderRadius:8,color:'#1a1a1a',fontSize:14,fontWeight:600,cursor:'pointer'}},'Done')
+          :h(Fragment,null,
+              (tab==='routines'?(groups.length+ungrouped.length)>1:sessions.length>1)&&h('button',{onClick:()=>setReordering(true),style:{padding:'7px 14px',background:'transparent',border:`1px solid ${C.b}`,borderRadius:8,color:C.ts,fontSize:14,fontWeight:500,cursor:'pointer'}},'Reorder'),
+              h('button',{className:'ib',onClick:tab==='routines'?onNewRoutine:onNewSession,style:{padding:'8px 14px',gap:6,color:C.t,borderColor:C.bhi}},
+                h(Icon,{name:'plus',style:{fontSize:15}}),' New')))),
     h('div',{style:{display:'flex',borderBottom:`1px solid ${C.b}`}},
-      h('button',{className:'tab',onClick:()=>setTab('routines'),style:tabStyle(tab==='routines')},`Routines (${routines.length})`),
-      h('button',{className:'tab',onClick:()=>setTab('sessions'),style:tabStyle(tab==='sessions')},`Sessions (${sessions.length})`)),
-    tab==='routines'&&h('button',{onClick:onNewGroup,style:{width:'100%',padding:'8px 0',background:'transparent',border:'none',borderBottom:`1px solid ${C.b}`,color:C.tt,fontSize:12,fontWeight:500,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',gap:5,marginBottom:'1.25rem',letterSpacing:'0.03em'}},
-      h(Icon,{name:'plus',style:{fontSize:12}}),'New Group'),
+      h('button',{className:'tab',onClick:()=>{setReordering(false);setTab('routines');},style:tabStyle(tab==='routines')},`Routines (${routines.length})`),
+      h('button',{className:'tab',onClick:()=>{setReordering(false);setTab('sessions');},style:tabStyle(tab==='sessions')},`Sessions (${sessions.length})`)),
+    tab==='routines'&&!reordering&&h('div',{style:{display:'flex',borderBottom:`1px solid ${C.b}`,marginBottom:'1.25rem'}},
+      h('button',{onClick:onNewGroup,style:{flex:1,padding:'8px 0',background:'transparent',border:'none',color:C.tt,fontSize:12,fontWeight:500,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',gap:5,letterSpacing:'0.03em'}},
+        h(Icon,{name:'plus',style:{fontSize:12}}),'New Group')),
+    (tab==='routines'&&reordering||tab==='sessions'&&!reordering&&sessions.length===0||tab==='sessions'&&reordering||tab==='routines'&&!reordering&&(groups.length+ungrouped.length)===0)&&!reordering&&h('div',{style:{marginBottom:'1.25rem'}}),
     tab==='routines'
       ?(routines.length===0
           ?h('div',{style:{textAlign:'center',padding:'5rem 1rem'}},
               h(Icon,{name:'dumbbell',style:{fontSize:48,display:'block',marginBottom:16,opacity:0.18,color:C.t}}),
               h('p',{style:{fontSize:15,fontWeight:500,color:C.t,marginBottom:4}},'No routines yet'),
               h('p',{style:{fontSize:13,color:C.ts}},'Tap "New" to build your first routine'))
-          :h('div',{style:{display:'flex',flexDirection:'column',gap:10}},
-              groups.map(g=>h(GroupRow,{key:g.id,group:g,routines,sessions,
-                onPlay:onPlayRoutine,onEdit:onEditRoutine,onDelete:onDeleteRoutine,onAddToSession,
-                onRenameGroup,onDeleteGroup,
-                onToggleCollapse:v=>onToggleCollapse(g.id,v)})),
-              ungrouped.map(r=>h(RoutineCard,{key:r.id,r,sessions,
-                onPlay:onPlayRoutine,onEdit:onEditRoutine,onDelete:onDeleteRoutine,onAddToSession}))))
+          :reordering
+            ?h('div',{style:{display:'flex',flexDirection:'column',gap:10}},
+                topItems.map((item,i)=>{
+                  const label=item.type==='group'
+                    ?groups.find(g=>g.id===item.id)?.title||'Group'
+                    :ungrouped.find(r=>r.id===item.id)?.title||'Routine';
+                  const isGroup=item.type==='group';
+                  return h('div',{key:item.id,style:{display:'flex',alignItems:'center',gap:10,padding:'12px 14px',background:isGroup?C.s2:C.s1,border:`1px solid ${C.b}`,borderRadius:isGroup?10:12}},
+                    h('span',{style:{flex:1,fontSize:15,fontWeight:600,color:C.t}},label),
+                    h('button',{...updownBtn(()=>moveTop(i,-1),i===0)},h(Icon,{name:'chevron-up',style:{fontSize:16}})),
+                    h('button',{...updownBtn(()=>moveTop(i,1),i===topItems.length-1)},h(Icon,{name:'chevron-down',style:{fontSize:16}})));
+                }))
+            :h('div',{style:{display:'flex',flexDirection:'column',gap:10}},
+                groups.map(g=>h(GroupRow,{key:g.id,group:g,routines,sessions,
+                  onPlay:onPlayRoutine,onEdit:onEditRoutine,onDelete:onDeleteRoutine,onAddToSession,
+                  onRenameGroup,onDeleteGroup,
+                  onToggleCollapse:v=>onToggleCollapse(g.id,v)})),
+                ungrouped.map(r=>h(RoutineCard,{key:r.id,r,sessions,
+                  onPlay:onPlayRoutine,onEdit:onEditRoutine,onDelete:onDeleteRoutine,onAddToSession}))))
       :(sessions.length===0
           ?h('div',{style:{textAlign:'center',padding:'5rem 1rem',marginTop:'1.25rem'}},
               h(Icon,{name:'layout-list',style:{fontSize:48,display:'block',marginBottom:16,opacity:0.18,color:C.t}}),
               h('p',{style:{fontSize:15,fontWeight:500,color:C.t,marginBottom:4}},'No sessions yet'),
               h('p',{style:{fontSize:13,color:C.ts}},'Tap "New" to build your first session'))
-          :h('div',{style:{display:'flex',flexDirection:'column',gap:10,marginTop:'1.25rem'}},
-              sessions.map(s=>h(SessionCard,{key:s.id,s,routines,onOpen:()=>onOpenSession(s),onEdit:onEditSession,onDelete:onDeleteSession})))));
+          :reordering
+            ?h('div',{style:{display:'flex',flexDirection:'column',gap:10,marginTop:'1.25rem'}},
+                sessions.map((s,i)=>h('div',{key:s.id,style:{display:'flex',alignItems:'center',gap:10,padding:'12px 14px',background:C.s1,border:`1px solid ${C.b}`,borderRadius:12}},
+                  h('span',{style:{flex:1,fontSize:15,fontWeight:600,color:C.t}},s.name||'Untitled Session'),
+                  h('button',{...updownBtn(()=>onReorderSessions(moveItem(sessions,i,-1)),i===0)},h(Icon,{name:'chevron-up',style:{fontSize:16}})),
+                  h('button',{...updownBtn(()=>onReorderSessions(moveItem(sessions,i,1)),i===sessions.length-1)},h(Icon,{name:'chevron-down',style:{fontSize:16}})))))            :h('div',{style:{display:'flex',flexDirection:'column',gap:10,marginTop:'1.25rem'}},
+                sessions.map(s=>h(SessionCard,{key:s.id,s,routines,onOpen:()=>onOpenSession(s),onEdit:onEditSession,onDelete:onDeleteSession})))));
 }
 
 // ── App ───────────────────────────────────────────────────────────────────────
@@ -523,8 +577,14 @@ function App(){
   // save
   useEffect(()=>{saveData({routines,sessions,groups});},[routines,sessions,groups]);
 
-  const persistRoutine=r=>{
+  const persistRoutine=(r,groupId)=>{
     setRoutines(p=>{const i=p.findIndex(x=>x.id===r.id);return i>=0?p.map(x=>x.id===r.id?r:x):[...p,r];});
+    // update group membership
+    setGroups(p=>{
+      const stripped=p.map(g=>({...g,routineIds:g.routineIds.filter(x=>x!==r.id)}));
+      if(!groupId)return stripped;
+      return stripped.map(g=>g.id===groupId?{...g,routineIds:[...g.routineIds,r.id]}:g);
+    });
     setView('home');
   };
   const persistSession=s=>{
@@ -546,8 +606,11 @@ function App(){
   const newGroup=()=>setGroups(p=>[...p,{id:uid(),title:'New Group',routineIds:[]}]);
   const renameGroup=(id,title)=>setGroups(p=>p.map(g=>g.id===id?{...g,title}:g));
   const deleteGroup=id=>setGroups(p=>p.filter(g=>g.id!==id));
+  const reorderGroups=newGroups=>setGroups(p=>{const rest=p.filter(g=>!newGroups.find(x=>x.id===g.id));return[...newGroups,...rest];});
+  const reorderRoutines=(newUngrouped,groupedIds)=>setRoutines(p=>{const grouped=p.filter(r=>groupedIds.includes(r.id));return[...grouped,...newUngrouped];});
+  const reorderSessions=newSessions=>setSessions(newSessions);
 
-  if(view==='editRoutine')return h(EditRoutineView,{routine:editingRoutine,onSave:persistRoutine,onBack:()=>setView('home')});
+  if(view==='editRoutine')return h(EditRoutineView,{routine:editingRoutine,groups,onSave:persistRoutine,onBack:()=>setView('home')});
   if(view==='editSession')return h(EditSessionView,{session:editingSession,routines,onSave:persistSession,onBack:()=>setView('home')});
   if(view==='sessionDetail')return h(SessionDetailView,{session:activeSession,routines,onBack:()=>setView('home'),onStartRoutine:r=>{setActiveRoutine(r);setView('timer');}});
   if(view==='timer')return h(TimerView,{routine:activeRoutine,onBack:()=>{setView(activeSession?'sessionDetail':'home');}});
@@ -563,6 +626,7 @@ function App(){
     onDeleteSession:deleteSession,
     onOpenSession:s=>{setActiveSession(s);setHomeTab('sessions');setView('sessionDetail');},
     onNewGroup:newGroup,onRenameGroup:renameGroup,onDeleteGroup:deleteGroup,onToggleCollapse:toggleCollapse,
+    onReorderGroups:reorderGroups,onReorderRoutines:reorderRoutines,onReorderSessions:reorderSessions,
   });
 }
 
