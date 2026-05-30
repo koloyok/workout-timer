@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Workout Timer</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#111;margin:0}
+input[type=range]{accent-color:#8883EB;width:100%}
+input[type=number]{-moz-appearance:textfield;outline:none}
+input[type=number]::-webkit-inner-spin-button,input[type=number]::-webkit-outer-spin-button{-webkit-appearance:none}
+input:focus{outline:none;border-color:rgba(255,255,255,0.28)!important}
+.ib{background:transparent;border:1px solid rgba(255,255,255,0.1);border-radius:8px;padding:7px 9px;cursor:pointer;color:#666;font-size:17px;line-height:1;display:flex;align-items:center}
+.ib:hover{border-color:rgba(255,255,255,0.22);color:#bbb}
+.tog{display:flex;background:#1a1a1a;border-radius:7px;border:1px solid rgba(255,255,255,0.08);overflow:hidden;flex-shrink:0}
+.tbtn{padding:5px 12px;font-size:12px;font-weight:500;border:none;cursor:pointer;font-family:inherit}
+.tab{padding:8px 0;font-size:14px;font-weight:500;background:transparent;border:none;cursor:pointer;font-family:inherit;flex:1;border-bottom:2px solid transparent;transition:color 0.15s,border-color 0.15s}
+</style>
+</head>
+<body>
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none"><symbol id="ti-arrow-left" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l14 0"/><path d="M5 12l6 6"/><path d="M5 12l6 -6"/></symbol><symbol id="ti-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5l10 -10"/></symbol><symbol id="ti-dumbbell" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7.026 9.61l-.95 -4.18a2 2 0 0 1 1.95 -2.43h8a2 2 0 0 1 2 2.43l-1 4.2"/><path d="M9.026 17.001h6"/><path d="M18.906 20.06a7.92 7.92 0 0 0 1 -5.33a8 8 0 1 0 -14.77 5.33a2 2 0 0 0 1.71 .94h10.36a2 2 0 0 0 1.7 -.94"/></symbol><symbol id="ti-edit" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 7h-1a2 2 0 0 0 -2 2v9a2 2 0 0 0 2 2h9a2 2 0 0 0 2 -2v-1"/><path d="M20.385 6.585a2.1 2.1 0 0 0 -2.97 -2.97l-8.415 8.385v3h3l8.385 -8.415"/><path d="M16 5l3 3"/></symbol><symbol id="ti-folder" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l3 3h7a2 2 0 0 1 2 2v8a2 2 0 0 1 -2 2h-14a2 2 0 0 1 -2 -2v-11a2 2 0 0 1 2 -2"/></symbol><symbol id="ti-layout-list" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2l0 -2"/><path d="M4 16a2 2 0 0 1 2 -2h12a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-12a2 2 0 0 1 -2 -2l0 -2"/></symbol><symbol id="ti-list-numbers" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 6h9"/><path d="M11 12h9"/><path d="M12 18h8"/><path d="M4 16a2 2 0 1 1 4 0c0 .591 -.5 1 -1 1.5l-3 2.5h4"/><path d="M6 10v-6l-2 2"/></symbol><symbol id="ti-minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l14 0"/></symbol><symbol id="ti-player-pause" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 6a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1l0 -12"/><path d="M14 6a1 1 0 0 1 1 -1h2a1 1 0 0 1 1 1v12a1 1 0 0 1 -1 1h-2a1 1 0 0 1 -1 -1l0 -12"/></symbol><symbol id="ti-player-play" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M7 4v16l13 -8l-13 -8"/></symbol><symbol id="ti-player-skip-forward" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5v14l12 -7l-12 -7"/><path d="M20 5l0 14"/></symbol><symbol id="ti-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5l0 14"/><path d="M5 12l14 0"/></symbol><symbol id="ti-refresh" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 11a8.1 8.1 0 0 0 -15.5 -2m-.5 -4v4h4"/><path d="M4 13a8.1 8.1 0 0 0 15.5 2m.5 4v-4h-4"/></symbol><symbol id="ti-trash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7l16 0"/><path d="M10 11l0 6"/><path d="M14 11l0 6"/><path d="M5 7l1 12a2 2 0 0 0 2 2h8a2 2 0 0 0 2 -2l1 -12"/><path d="M9 7v-3a1 1 0 0 1 1 -1h4a1 1 0 0 1 1 1v3"/></symbol><symbol id="ti-trophy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 21l8 0"/><path d="M12 17l0 4"/><path d="M7 4l10 0"/><path d="M17 4v8a5 5 0 0 1 -10 0v-8"/><path d="M3 9a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M17 9a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/></symbol><symbol id="ti-chevron-down" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6l6 -6"/></symbol><symbol id="ti-grip-vertical" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M9 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M9 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 5m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 12m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/><path d="M15 19m-1 0a1 1 0 1 0 2 0a1 1 0 1 0 -2 0"/></symbol><symbol id="ti-x" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6l-12 12"/><path d="M6 6l12 12"/></symbol></svg>
+<div id="root" style="background:#111;min-height:560px;color:#f0f0f0;font-family:system-ui,-apple-system,sans-serif">
+  <div style="display:flex;align-items:center;justify-content:center;height:200px;color:#444;font-size:14px">Loading…</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.production.min.js"></script>
+<script>
+const {useState,useEffect,useRef,createElement:h,Fragment}=React;
+
+function Icon({name,style}){
+  return h('svg',{width:'1em',height:'1em',viewBox:'0 0 24 24',fill:'none',stroke:'currentColor',strokeWidth:2,strokeLinecap:'round',strokeLinejoin:'round',style:{display:'inline-block',verticalAlign:'middle',...(style||{})}},
+    h('use',{href:'#ti-'+name}));
+}
+
+// ── Colours ──────────────────────────────────────────────────────────────────
+// ── Colour tokens (dark scheme) ───────────────────────────────────────────────
+const T={
+  'violet-text':'#8883EB','violet-bg':'#1E1D3A',
+  'tangerine-text':'#E0804A','tangerine-bg':'#2B1A0E',
+  'amber-text':'#D4A822','amber-bg':'#241A05',
+  'emerald-text':'#3DAF60',
+  'sky-text':'#5BB8E8',
+  'crimson-text':'#D94F4F',
+};
+const C={
+  bg:'#111',s1:'#181818',s2:'#1e1e1e',inp:'#212121',
+  b:'rgba(255,255,255,0.09)',bhi:'rgba(255,255,255,0.2)',
+  t:'#f0f0f0',ts:'#888',tt:'#444',
+  // primary violet
+  a:T['violet-text'],abg:T['violet-bg'],at:'#1a1a1a',
+  // traditional tangerine
+  tr:T['tangerine-text'],trbg:T['tangerine-bg'],trt:'#1a1a1a',
+  // circuit amber
+  ci:T['amber-text'],cibg:T['amber-bg'],cit:'#1a1a1a',
+  // rest / done / delete
+  r:T['sky-text'],g:T['emerald-text'],danger:T['crimson-text'],
+  ring:'rgba(255,255,255,0.07)',
+};
+
+// ── Audio ────────────────────────────────────────────────────────────────────
+let _ctx=null;
+function actx(){if(!_ctx)_ctx=new(window.AudioContext||window.webkitAudioContext)();if(_ctx.state==='suspended')_ctx.resume();return _ctx;}
+function tone(f,d,v=0.3,dl=0){try{const c=actx(),o=c.createOscillator(),g=c.createGain();o.connect(g);g.connect(c.destination);o.frequency.value=f;o.type='sine';const t=c.currentTime+dl;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(v,t+0.01);g.gain.exponentialRampToValueAtTime(0.001,t+d);o.start(t);o.stop(t+d+0.05);}catch{}}
+const SFX={cd:()=>tone(880,0.07,0.26),work:()=>{tone(1047,0.1,0.36);tone(1319,0.13,0.36,0.13)},rest:()=>tone(523,0.2,0.26),trans:()=>{tone(784,0.1,0.32);tone(988,0.1,0.32,0.13);tone(1175,0.18,0.32,0.27)},done:()=>{tone(880,0.13,0.36);tone(740,0.13,0.3,0.17);tone(587,0.28,0.26,0.34)}};
+
+// ── Persistence ──────────────────────────────────────────────────────────────
+const KEY='workout-timer';
+function loadData(){try{const r=localStorage.getItem(KEY);return r?JSON.parse(r):{routines:[],sessions:[],groups:[]};}catch{return{routines:[],sessions:[],groups:[]};}}
+function saveData(d){try{localStorage.setItem(KEY,JSON.stringify(d));}catch{}}
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+const uid=()=>Math.random().toString(36).slice(2,8);
+const fmt=s=>{const m=Math.floor(s/60);return m?`${m}:${String(s%60).padStart(2,'0')}`:String(s);};
+const fmtL=s=>s===0?'None':s<60?`${s}s`:`${fmt(s)} min`;
+
+const newTradEx=()=>({id:uid(),name:'',mode:'reps',reps:10,duration:60,sets:3,restBetweenSets:60,restAfterExercise:120});
+const newCircEx=()=>({id:uid(),name:'',mode:'reps',reps:10,duration:60,restAfterExercise:120});
+const newTradRoutine=()=>({id:uid(),title:'',mode:'traditional',exercises:[newTradEx()]});
+const newCircRoutine=()=>({id:uid(),title:'',mode:'circuit',rounds:3,restBetweenRounds:90,exercises:[newCircEx()]});
+
+// ── Sequence builders ─────────────────────────────────────────────────────────
+function buildTradSeq(r){
+  const steps=[];
+  r.exercises.forEach((ex,ei)=>{
+    const last=ei===r.exercises.length-1;
+    for(let i=1;i<=ex.sets;i++){
+      steps.push({type:'work',label:ex.name||'Exercise',info:ex.sets>1?`Set ${i} of ${ex.sets}`:null,timed:ex.mode==='time',dur:ex.mode==='time'?ex.duration:null,reps:ex.mode==='reps'?ex.reps:null});
+      if(i<ex.sets&&ex.restBetweenSets>0)steps.push({type:'rest',label:'Rest',info:`Set ${i+1} of ${ex.sets} next`,dur:ex.restBetweenSets,timed:true});
+    }
+    if(!last&&ex.restAfterExercise>0)steps.push({type:'rest',label:'Rest',info:`Up next: ${r.exercises[ei+1]?.name||'next exercise'}`,dur:ex.restAfterExercise,timed:true,isTrans:true});
+  });
+  return steps;
+}
+function buildCircSeq(r){
+  const steps=[];
+  const{rounds,restBetweenRounds,exercises:exs}=r;
+  for(let rd=1;rd<=rounds;rd++){
+    exs.forEach((ex,ei)=>{
+      steps.push({type:'work',label:ex.name||'Exercise',info:rounds>1?`Round ${rd} of ${rounds}`:null,timed:ex.mode==='time',dur:ex.mode==='time'?ex.duration:null,reps:ex.mode==='reps'?ex.reps:null});
+      if(ei<exs.length-1&&ex.restAfterExercise>0)steps.push({type:'rest',label:'Rest',info:`Up next: ${exs[ei+1]?.name||'next exercise'}`,dur:ex.restAfterExercise,timed:true});
+    });
+    if(rd<rounds&&restBetweenRounds>0)steps.push({type:'rest',label:`Round ${rd} complete`,info:`Round ${rd+1} of ${rounds} up next`,dur:restBetweenRounds,timed:true,isRoundRest:true});
+  }
+  return steps;
+}
+const buildSeq=r=>r.mode==='circuit'?buildCircSeq(r):buildTradSeq(r);
+
+function estTotal(r){
+  if(r.mode==='circuit'){
+    const{rounds,restBetweenRounds,exercises:exs}=r;
+    const oneRound=exs.reduce((t,ex,ei)=>{if(ex.mode==='time')t+=ex.duration;if(ei<exs.length-1)t+=ex.restAfterExercise;return t;},0);
+    return oneRound*rounds+restBetweenRounds*(rounds-1);
+  }
+  return r.exercises.reduce((t,ex,ei)=>{if(ex.mode==='time')t+=ex.duration*ex.sets;if(ex.sets>1)t+=ex.restBetweenSets*(ex.sets-1);if(ei<r.exercises.length-1)t+=ex.restAfterExercise;return t;},0);
+}
+
+// ── Shared style objects ───────────────────────────────────────────────────────
+const card={background:C.s2,border:`1px solid ${C.b}`,borderRadius:12,padding:'12px',display:'flex',flexDirection:'column',gap:10};
+const pill=(bg,color,border)=>({fontSize:11,padding:'2px 10px',borderRadius:99,fontWeight:500,background:bg,color,border:`1px solid ${border}`});
+const cbtn=p=>({flex:1,padding:'12px 0',background:p?C.a:'rgba(255,255,255,0.08)',border:p?'none':'1px solid rgba(255,255,255,0.15)',borderRadius:10,color:p?'#1a1a1a':C.t,fontSize:15,fontWeight:600,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',gap:8});
+
+// ── Atoms ─────────────────────────────────────────────────────────────────────
+function Ring({progress,size=172,sw=10,color}){
+  const r=(size-sw*2)/2,circ=2*Math.PI*r;
+  return h('svg',{width:size,height:size,style:{transform:'rotate(90deg) scaleX(-1)',display:'block'}},
+    h('circle',{cx:size/2,cy:size/2,r,fill:'none',style:{stroke:C.ring,strokeWidth:sw}}),
+    h('circle',{cx:size/2,cy:size/2,r,fill:'none',style:{stroke:color,strokeWidth:sw,strokeDasharray:circ,strokeDashoffset:circ*(1-progress),strokeLinecap:'round',transition:'stroke-dashoffset 0.85s linear'}}));
+}
+function Stepper({value,onChange,min=1,max=99}){
+  const[raw,setRaw]=useState(String(value));
+  useEffect(()=>setRaw(String(value)),[value]);
+  return h('div',{style:{display:'flex',alignItems:'center',gap:6}},
+    h('button',{className:'ib',onClick:()=>onChange(Math.max(min,value-1)),style:{padding:'4px 8px',fontSize:15}},h(Icon,{name:'minus'})),
+    h('input',{type:'number',value:raw,min,max,
+      onChange:e=>setRaw(e.target.value),
+      onBlur:()=>{const v=parseInt(raw);const clamped=isNaN(v)?min:Math.min(max,Math.max(min,v));onChange(clamped);setRaw(String(clamped));},
+      style:{width:46,padding:'5px 4px',fontSize:15,fontWeight:600,borderRadius:7,border:`1px solid ${C.b}`,background:C.inp,color:C.t,textAlign:'center',fontFamily:'inherit'}}),
+    h('button',{className:'ib',onClick:()=>onChange(Math.min(max,value+1)),style:{padding:'4px 8px',fontSize:15}},h(Icon,{name:'plus'})));
+}
+function SliderVal({value,onChange,max=300,color}){
+  const[raw,setRaw]=useState(String(value));
+  useEffect(()=>setRaw(String(value)),[value]);
+  return h('div',{style:{display:'flex',alignItems:'center',gap:8,flex:1,minWidth:0}},
+    h('input',{type:'range',min:0,max,step:5,value,onChange:e=>onChange(+e.target.value)}),
+    h('input',{type:'number',value:raw,min:0,max,
+      onChange:e=>setRaw(e.target.value),
+      onBlur:()=>{const v=parseInt(raw);const clamped=isNaN(v)?0:Math.min(max,Math.max(0,v));onChange(clamped);setRaw(String(clamped));},
+      style:{width:46,padding:'4px 6px',fontSize:13,fontWeight:500,borderRadius:6,border:`1px solid ${C.b}`,background:C.inp,color:color||C.a,textAlign:'center',fontFamily:'inherit'}}));
+}
+function LR({label,right,muted}){
+  return h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',paddingLeft:0,gap:10}},
+    h('span',{style:{fontSize:12,color:muted?C.tt:C.ts,whiteSpace:'nowrap'}},label),right);
+}
+function SL({text}){return h('span',{style:{fontSize:11,fontWeight:500,color:C.ts,textTransform:'uppercase',letterSpacing:'0.07em',display:'block',marginBottom:8}},text);}
+
+function ExName({ex,idx,total,onChange,onRemove}){
+  return h('div',{style:{display:'flex',gap:8,alignItems:'center'}},
+    h('span',{style:{fontSize:12,color:C.tt,minWidth:18,textAlign:'center',fontWeight:600}},idx+1),
+    h('input',{value:ex.name,onChange:e=>onChange('name',e.target.value),placeholder:'Exercise name',style:{flex:1,padding:'7px 11px',fontSize:14,borderRadius:8,border:`1px solid ${C.b}`,background:C.inp,color:C.t}}),
+    total>1&&h('button',{className:'ib',onClick:onRemove,style:{padding:'5px 7px',color:C.danger}},h(Icon,{name:'x',style:{fontSize:14}})));
+}
+function TypeRow({ex,onChange}){
+  const[rawDur,setRawDur]=useState(String(ex.duration));
+  useEffect(()=>setRawDur(String(ex.duration)),[ex.duration]);
+  return h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',paddingLeft:0,gap:10}},
+    h('div',{className:'tog',style:{flexShrink:0}},
+      h('button',{className:'tbtn',onClick:()=>onChange('mode','reps'),style:{background:ex.mode==='reps'?C.a:'transparent',color:ex.mode==='reps'?'#1a1a1a':C.ts}},'Reps'),
+      h('button',{className:'tbtn',onClick:()=>onChange('mode','time'),style:{background:ex.mode==='time'?C.a:'transparent',color:ex.mode==='time'?'#1a1a1a':C.ts}},'Time')),
+    ex.mode==='reps'
+      ?h(Stepper,{value:ex.reps,onChange:v=>onChange('reps',v),min:1,max:999})
+      :h('div',{style:{display:'flex',alignItems:'center',gap:8,flex:1,minWidth:0}},
+          h('input',{type:'range',min:5,max:300,step:5,value:ex.duration,onChange:e=>onChange('duration',+e.target.value),style:{flex:1,minWidth:0}}),
+          h('input',{type:'number',value:rawDur,min:5,max:300,
+            onChange:e=>setRawDur(e.target.value),
+            onBlur:()=>{const v=parseInt(rawDur);const clamped=isNaN(v)?5:Math.min(300,Math.max(5,v));onChange('duration',clamped);setRawDur(String(clamped));},
+            style:{width:46,padding:'4px 6px',fontSize:13,fontWeight:500,borderRadius:6,border:`1px solid ${C.b}`,background:C.inp,color:C.a,textAlign:'center',fontFamily:'inherit',flexShrink:0}})));
+}
+
+// Edit header — lavender save btn
+function EH({isNew,canSave,onSave,onBack,title}){
+  return h('div',{style:{display:'flex',alignItems:'center',gap:12,padding:'1rem',borderBottom:`1px solid ${C.b}`,position:'sticky',top:0,background:C.bg,zIndex:10}},
+    h('button',{className:'ib',onClick:onBack},h(Icon,{name:'arrow-left'})),
+    h('h1',{style:{fontSize:18,fontWeight:600,flex:1,color:C.t}},title||'Edit'),
+    h('button',{onClick:()=>canSave&&onSave(),disabled:!canSave,style:{padding:'7px 18px',background:canSave?C.a:'rgba(255,255,255,0.07)',border:'none',borderRadius:8,color:canSave?'#fff':C.tt,fontSize:14,fontWeight:600,cursor:canSave?'pointer':'default'}},'Save'));
+}
+
+function TradEx({ex,idx,total,isLast,onChange,onRemove}){
+  return h('div',{style:card},
+    h(ExName,{ex,idx,total,onChange,onRemove}),
+    h(TypeRow,{ex,onChange}),
+    h(LR,{label:'Sets',right:h(Stepper,{value:ex.sets,onChange:v=>onChange('sets',v),min:1,max:20})}),
+    ex.sets>1&&h(LR,{label:'Rest between sets',right:h(SliderVal,{value:ex.restBetweenSets,onChange:v=>onChange('restBetweenSets',v),color:C.r})}),
+    !isLast&&h(LR,{label:'Rest before next',right:h(SliderVal,{value:ex.restAfterExercise,onChange:v=>onChange('restAfterExercise',v)}),muted:true}));
+}
+function CircEx({ex,idx,total,isLast,onChange,onRemove}){
+  return h('div',{style:card},
+    h(ExName,{ex,idx,total,onChange,onRemove}),
+    h(TypeRow,{ex,onChange}),
+    !isLast&&h(LR,{label:'Rest before next',right:h(SliderVal,{value:ex.restAfterExercise,onChange:v=>onChange('restAfterExercise',v)}),muted:true}));
+}
+
+// ── Mode colours helper ────────────────────────────────────────────────────────
+const modeAccent=m=>m==='circuit'?C.ci:C.tr;
+const modeBg=m=>m==='circuit'?C.cibg:C.trbg;
+const modeText=m=>m==='circuit'?C.cit:C.trt;
+const modeLabel=(r)=>r.mode==='circuit'?`Circuit · ${r.rounds} round${r.rounds!==1?'s':''}`:' Traditional';
+
+// ── Edit Routine ──────────────────────────────────────────────────────────────
+function EditRoutineView({routine,onSave,onBack}){
+  const[r,setR]=useState(routine);
+  const upEx=(id,f,v)=>setR(p=>({...p,exercises:p.exercises.map(e=>e.id===id?{...e,[f]:v}:e)}));
+  const canSave=r.title.trim()&&r.exercises.length>0&&r.exercises.every(e=>e.name.trim());
+  const switchMode=m=>{
+    if(m===r.mode)return;
+    setR(p=>m==='circuit'
+      ?{...p,mode:'circuit',rounds:3,restBetweenRounds:90,exercises:[newCircEx()]}
+      :{...p,mode:'traditional',exercises:[newTradEx()]});
+  };
+  const isNew=!routine.title;
+  return h('div',{style:{maxWidth:420,margin:'0 auto',paddingBottom:'4rem'}},
+    h(EH,{isNew,canSave,onSave:()=>onSave(r),onBack,title:isNew?'New Routine':'Edit Routine'}),
+    h('div',{style:{padding:'1.25rem 1rem',display:'flex',flexDirection:'column',gap:'1.5rem'}},
+      // Mode toggle at top
+      h('div',null,
+        h(SL,{text:'Workout Type'}),
+        h('div',{className:'tog',style:{width:'100%'}},
+          h('button',{className:'tbtn',onClick:()=>switchMode('traditional'),style:{flex:1,padding:'8px 0',background:r.mode==='traditional'?C.tr:'transparent',color:r.mode==='traditional'?'#1a1a1a':C.ts}},'Traditional'),
+          h('button',{className:'tbtn',onClick:()=>switchMode('circuit'),style:{flex:1,padding:'8px 0',background:r.mode==='circuit'?C.ci:'transparent',color:r.mode==='circuit'?'#1a1a1a':C.ts}},'Circuit'))),
+      // Title
+      h('div',null,
+        h(SL,{text:'Routine Title'}),
+        h('input',{value:r.title,onChange:e=>setR(p=>({...p,title:e.target.value})),placeholder:r.mode==='circuit'?'e.g. Strength, Mobility, Cardio…':'e.g. Push, Pull, Legs…',style:{width:'100%',padding:'10px 13px',fontSize:15,borderRadius:9,border:`1px solid ${C.b}`,background:C.inp,color:C.t}})),
+      // Circuit settings
+      r.mode==='circuit'&&h('div',null,
+        h(SL,{text:'Circuit Settings'}),
+        h('div',{style:{background:C.s2,borderRadius:12,border:`1px solid ${C.b}`,padding:'12px',display:'flex',flexDirection:'column',gap:12}},
+          h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center'}},
+            h('span',{style:{fontSize:13,color:C.ts}},'Rounds'),
+            h(Stepper,{value:r.rounds,onChange:v=>setR(p=>({...p,rounds:v})),min:1,max:20})),
+          r.rounds>1&&h(Fragment,null,
+            h('div',{style:{height:1,background:C.b}}),
+            h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',gap:10}},
+              h('span',{style:{fontSize:12,color:C.ts,whiteSpace:'nowrap'}},'Rest between rounds'),
+              h(SliderVal,{value:r.restBetweenRounds,onChange:v=>setR(p=>({...p,restBetweenRounds:v})),color:C.r}))))),
+      // Exercises
+      h('div',null,
+        h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:r.mode==='circuit'?4:10}},
+          h(SL,{text:`Exercises · ${r.exercises.length}`}),
+          estTotal(r)>0&&h('span',{style:{fontSize:12,color:C.tt}},`~${fmtL(estTotal(r))} timed`)),
+        r.mode==='circuit'&&h('p',{style:{fontSize:12,color:C.tt,marginBottom:10}},'Each exercise is done once per round.'),
+        h('div',{style:{display:'flex',flexDirection:'column',gap:10}},
+          r.mode==='traditional'
+            ?r.exercises.map((ex,i)=>h(TradEx,{key:ex.id,ex,idx:i,total:r.exercises.length,isLast:i===r.exercises.length-1,onChange:(f,v)=>upEx(ex.id,f,v),onRemove:()=>setR(p=>({...p,exercises:p.exercises.filter(e=>e.id!==ex.id)}))}))
+            :r.exercises.map((ex,i)=>h(CircEx,{key:ex.id,ex,idx:i,total:r.exercises.length,isLast:i===r.exercises.length-1,onChange:(f,v)=>upEx(ex.id,f,v),onRemove:()=>setR(p=>({...p,exercises:p.exercises.filter(e=>e.id!==ex.id)}))}))),
+        h('button',{onClick:()=>setR(p=>({...p,exercises:[...p.exercises,p.mode==='circuit'?newCircEx():newTradEx()]})),style:{marginTop:8,width:'100%',padding:'11px 0',border:`1px dashed ${C.a}55`,borderRadius:9,background:'rgba(136,131,235,0.07)',color:C.a,fontSize:13,fontWeight:500,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',gap:5}},
+          h(Icon,{name:'plus',style:{fontSize:14}}),'Add Exercise'))));
+}
+
+// ── Edit Session ──────────────────────────────────────────────────────────────
+function EditSessionView({session,routines,onSave,onBack}){
+  const[s,setS]=useState(session);
+  const canSave=s.name.trim();
+  const toggle=id=>setS(p=>({...p,routineIds:p.routineIds.includes(id)?p.routineIds.filter(x=>x!==id):[...p.routineIds,id]}));
+  const isNew=!session.name;
+  return h('div',{style:{maxWidth:420,margin:'0 auto',paddingBottom:'4rem'}},
+    h(EH,{isNew,canSave,onSave:()=>onSave(s),onBack,title:isNew?'New Session':'Edit Session'}),
+    h('div',{style:{padding:'1.25rem 1rem',display:'flex',flexDirection:'column',gap:'1.5rem'}},
+      h('div',null,
+        h(SL,{text:'Session Name'}),
+        h('input',{value:s.name,onChange:e=>setS(p=>({...p,name:e.target.value})),placeholder:'e.g. Monday Push Day…',style:{width:'100%',padding:'10px 13px',fontSize:15,borderRadius:9,border:`1px solid ${C.b}`,background:C.inp,color:C.t}})),
+      h('div',null,
+        h(SL,{text:`Routines · ${s.routineIds.length} selected`}),
+        routines.length===0
+          ?h('p',{style:{fontSize:13,color:C.tt,padding:'1rem',textAlign:'center'}},`No routines yet — create one first`)
+          :h('div',{style:{display:'flex',flexDirection:'column',gap:8}},
+              routines.map(r=>{
+                const sel=s.routineIds.includes(r.id);
+                const ac=modeAccent(r.mode),bg=modeBg(r.mode),tx=modeText(r.mode);
+                return h('button',{key:r.id,onClick:()=>toggle(r.id),style:{display:'flex',alignItems:'center',gap:12,padding:'12px',background:sel?'rgba(136,131,235,0.08)':C.s2,border:`1px solid ${sel?C.a:C.b}`,borderRadius:12,cursor:'pointer',textAlign:'left',width:'100%'}},
+                  h('div',{style:{width:32,height:32,borderRadius:8,background:sel?'rgba(136,131,235,0.18)':bg,display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}},
+                    h(Icon,{name:r.mode==='circuit'?'refresh':'list-numbers',style:{fontSize:15,color:sel?C.a:ac}})),
+                  h('div',{style:{flex:1,minWidth:0}},
+                    h('p',{style:{fontWeight:600,fontSize:14,color:sel?C.t:C.ts,marginBottom:2}},r.title),
+                    h('p',{style:{fontSize:12}},
+                      h('span',{style:{color:ac,fontWeight:500}},r.mode==='circuit'?'Circuit':'Traditional'),
+                      h('span',{style:{color:C.tt}},r.mode==='circuit'?` · ${r.rounds}r · ${r.exercises.length} exercises`:` · ${r.exercises.length} exercises`))),
+                  sel&&h(Icon,{name:'check',style:{fontSize:15,color:C.a,flexShrink:0}}));
+              })))));
+}
+
+// ── Session Detail ─────────────────────────────────────────────────────────────
+function SessionDetailView({session,routines,onBack,onStartRoutine}){
+  const rlist=session.routineIds.map(id=>routines.find(r=>r.id===id)).filter(Boolean);
+  return h('div',{style:{maxWidth:420,margin:'0 auto',paddingBottom:'4rem'}},
+    h('div',{style:{display:'flex',alignItems:'center',gap:12,padding:'1rem',borderBottom:`1px solid ${C.b}`,position:'sticky',top:0,background:C.bg,zIndex:10}},
+      h('button',{className:'ib',onClick:onBack},h(Icon,{name:'arrow-left'})),
+      h('h1',{style:{fontSize:18,fontWeight:600,flex:1,color:C.t}},session.name||'Session')),
+    h('div',{style:{padding:'1.25rem 1rem',display:'flex',flexDirection:'column',gap:10}},
+      rlist.length===0
+        ?h('p',{style:{fontSize:13,color:C.tt,textAlign:'center',padding:'3rem 0'}},'No routines in this session.')
+        :rlist.map(r=>{
+            const ac=modeAccent(r.mode),bg=modeBg(r.mode),tx=modeText(r.mode);
+            const tot=estTotal(r);
+            return h('div',{key:r.id,style:{background:C.s1,border:`1px solid ${C.b}`,borderRadius:12,padding:'1rem'}},
+              h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:10}},
+                h('div',null,
+                  h('p',{style:{fontWeight:600,fontSize:15,color:C.t,marginBottom:4}},r.title),
+                  h('div',{style:{display:'flex',gap:8,alignItems:'center'}},
+                    r.mode==='circuit'
+                      ?h(Fragment,null,h('span',{style:{fontSize:12,color:ac,fontWeight:500}},'Circuit'),h('span',{style:{fontSize:12,color:C.ts}},` · ${r.rounds}r`))
+                      :h('span',{style:{fontSize:12,color:ac,fontWeight:500}},'Traditional'),
+                    h('span',{style:{fontSize:12,color:C.tt}},'·'),
+                    h('span',{style:{fontSize:12,color:C.ts}},`${r.exercises.length} ex${tot>0?' · ~'+fmtL(tot):''}`))),
+                h('div',{style:{display:'flex',gap:6}})),
+              h('div',{style:{display:'flex',gap:5,flexWrap:'wrap',marginBottom:12}},
+                r.exercises.map(e=>h('span',{key:e.id,style:pill('rgba(255,255,255,0.05)',C.ts,C.b)},
+                  r.mode==='circuit'?e.name||'Exercise':`${e.name||'Exercise'} ×${e.sets}`))),
+              h('button',{onClick:()=>onStartRoutine(r),style:{width:'100%',padding:'11px 0',background:C.a,border:'none',borderRadius:10,color:'#fff',fontSize:14,fontWeight:600,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',gap:6}},
+                h(Icon,{name:'player-play',style:{fontSize:15}}),'Start'));
+          })));
+}
+
+// ── Timer ─────────────────────────────────────────────────────────────────────
+function TimerView({routine,onBack}){
+  const seq=useRef(buildSeq(routine)).current;
+  const[st,setSt]=useState({idx:0,tl:seq[0]?.dur||0,running:false,done:false});
+  const ref=useRef(st);ref.current=st;
+  const intRef=useRef(null);
+  useEffect(()=>{
+    if(!st.running){clearInterval(intRef.current);return;}
+    if(!seq[st.idx]?.timed){clearInterval(intRef.current);return;}
+    clearInterval(intRef.current);
+    intRef.current=setInterval(()=>{
+      const{idx,tl}=ref.current;
+      const nt=tl-1;
+      if(nt>0&&nt<=3)SFX.cd();
+      if(nt<=0){
+        const ni=idx+1;
+        if(ni>=seq.length){SFX.done();clearInterval(intRef.current);setSt(s=>({...s,running:false,done:true,tl:0}));}
+        else{const ns=seq[ni];if(ns.type==='rest')(ns.isTrans||ns.isRoundRest?SFX.trans:SFX.rest)();else SFX.work();setSt(s=>({...s,idx:ni,tl:ns.dur||0}));}
+      }else setSt(s=>({...s,tl:nt}));
+    },1000);
+    return()=>clearInterval(intRef.current);
+  },[st.running,st.idx]);
+  function advance(){
+    const ni=ref.current.idx+1;
+    if(ni>=seq.length){SFX.done();setSt(s=>({...s,running:false,done:true}));}
+    else{const ns=seq[ni];(ns.type==='rest'?SFX.rest:SFX.work)();setSt(s=>({...s,idx:ni,tl:ns.dur||0}));}
+  }
+  const toggle=()=>{if(!st.running)SFX.work();setSt(s=>({...s,running:!s.running}));};
+  const reset=()=>{clearInterval(intRef.current);setSt({idx:0,tl:seq[0]?.dur||0,running:false,done:false});};
+  const{idx,tl,running,done}=st;
+  const cur=seq[idx],nxt=seq[idx+1];
+  const isRest=cur?.type==='rest',isTimed=cur?.timed;
+  const accent=done?C.g:isRest?C.r:C.a;
+  const tt=seq.filter(s=>s.timed&&s.dur).reduce((a,s)=>a+s.dur,0);
+  const td=seq.slice(0,idx).filter(s=>s.timed&&s.dur).reduce((a,s)=>a+s.dur,0)+(cur?.timed&&cur?.dur?cur.dur-tl:0);
+  const op=tt>0?Math.min(1,td/tt):0;
+  const ns=cur?.label?.length>18?17:cur?.label?.length>12?21:26;
+  const nl=nxt?(nxt.type==='rest'?`Rest · ${fmtL(nxt.dur)}`:nxt.reps?`${nxt.label} · ${nxt.reps} reps`:`${nxt.label} · ${fmtL(nxt.dur)}`):null;
+  const skipS={padding:'12px 14px',background:'transparent',border:'1px solid rgba(255,255,255,0.15)',borderRadius:10,color:C.ts,fontSize:13,fontWeight:500,cursor:'pointer',display:'flex',alignItems:'center',gap:5,whiteSpace:'nowrap'};
+  return h('div',{style:{maxWidth:420,margin:'0 auto',display:'flex',flexDirection:'column',minHeight:560}},
+    h('div',{style:{display:'flex',alignItems:'center',gap:12,padding:'1rem',borderBottom:`1px solid ${C.b}`}},
+      h('button',{className:'ib',onClick:onBack},h(Icon,{name:'arrow-left'})),
+      h('p',{style:{flex:1,fontWeight:600,fontSize:15,color:C.t}},routine.title||'Routine'),
+      h('span',{style:{fontSize:12,color:C.tt}},`${idx+1} / ${seq.length}`)),
+    tt>0&&h('div',{style:{height:2,background:'rgba(255,255,255,0.06)'}},
+      h('div',{style:{height:'100%',background:accent,width:`${op*100}%`,transition:'width 0.8s linear'}})),
+    h('div',{style:{flex:1,display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center',padding:'2rem 1rem',gap:'1rem'}},
+      done
+        ?h('div',{style:{textAlign:'center',width:'100%'}},
+            h(Icon,{name:'trophy',style:{fontSize:56,color:C.g,display:'block',margin:'0 auto 16px'}}),
+            h('h2',{style:{fontSize:22,fontWeight:600,color:C.t,marginBottom:8}},'Routine complete!'),
+            h('p',{style:{fontSize:14,color:C.ts}},routine.title||'Great work!'))
+        :h(Fragment,null,
+            cur?.info&&h('p',{style:{fontSize:13,color:C.tt,letterSpacing:'0.02em'}},cur.info),
+            h('h2',{style:{fontSize:ns,fontWeight:600,textAlign:'center',color:isRest?C.r:C.t,lineHeight:1.2,maxWidth:280}},cur?.label),
+            isTimed
+              ?h('div',{style:{position:'relative',display:'inline-flex',alignItems:'center',justifyContent:'center'}},
+                  h(Ring,{progress:cur.dur?tl/cur.dur:1,color:accent}),
+                  h('div',{style:{position:'absolute',textAlign:'center'}},
+                    h('div',{style:{fontSize:46,fontWeight:600,color:C.t,lineHeight:1,fontFamily:'monospace'}},fmt(tl)),
+                    h('div',{style:{fontSize:11,color:C.tt,marginTop:5,letterSpacing:'0.07em'}},tl<60?'SECONDS':'REMAINING')))
+              :h('div',{style:{width:172,height:172,borderRadius:'50%',border:`10px solid ${C.a}`,background:'rgba(136,131,235,0.08)',display:'flex',flexDirection:'column',alignItems:'center',justifyContent:'center'}},
+                  h('div',{style:{fontSize:52,fontWeight:600,color:C.t,lineHeight:1}},cur?.reps),
+                  h('div',{style:{fontSize:11,color:C.tt,marginTop:5,letterSpacing:'0.07em'}},'REPS')),
+            nl&&h('div',{style:{display:'flex',alignItems:'center',gap:8,padding:'8px 16px',background:C.s2,borderRadius:9,border:`1px solid ${C.b}`}},
+              h('span',{style:{fontSize:11,color:C.tt,fontWeight:500,letterSpacing:'0.07em'}},'NEXT'),
+              h('span',{style:{fontSize:13,color:C.ts}},nl)))),
+    h('div',{style:{padding:'1rem',borderTop:`1px solid ${C.b}`,display:'flex',gap:8}},
+      h('button',{className:'ib',onClick:reset,style:{padding:'12px 14px'}},h(Icon,{name:'refresh',style:{fontSize:18}})),
+      !done&&isRest&&h('button',{onClick:advance,style:skipS},h(Icon,{name:'player-skip-forward',style:{fontSize:15}}),'Skip'),
+      done
+        ?h('button',{onClick:reset,style:cbtn(true)},'Go again')
+        :!isTimed&&running
+          ?h('button',{onClick:advance,style:cbtn(true)},h(Icon,{name:'check',style:{fontSize:18}}),'Done — next')
+          :h('button',{onClick:toggle,style:cbtn(!running)},
+              h(Icon,{name:running?'player-pause':'player-play',style:{fontSize:18}}),
+              running?'Pause':idx===0&&!st.running?'Start':'Resume')));
+}
+
+// ── Routine Card ──────────────────────────────────────────────────────────────
+function RoutineCard({r,routines,sessions,onPlay,onEdit,onDelete,onAddToSession}){
+  const[pickerOpen,setPickerOpen]=useState(false);
+  const total=estTotal(r);
+  const ac=modeAccent(r.mode);
+  return h('div',{style:{background:C.s1,border:`1px solid ${C.b}`,borderRadius:12,padding:'1rem 1.25rem',position:'relative'}},
+    h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:8}},
+      h('div',{style:{flex:1,minWidth:0}},
+        h('p',{style:{fontWeight:600,fontSize:16,color:C.t,marginBottom:4}},r.title||'Untitled'),
+        h('div',{style:{display:'flex',gap:8,alignItems:'center'}},
+          r.mode==='circuit'
+            ?h(Fragment,null,h('span',{style:{fontSize:12,color:ac,fontWeight:500}},'Circuit'),h('span',{style:{fontSize:12,color:C.ts}},` · ${r.rounds}r`))
+            :h('span',{style:{fontSize:12,color:ac,fontWeight:500}},'Traditional'),
+          h('span',{style:{fontSize:12,color:C.tt}},'·'),
+          h('span',{style:{fontSize:12,color:C.ts}},`${r.exercises.length} ex${total>0?' · ~'+fmtL(total):''}`))),
+      h('div',{style:{display:'flex',gap:5,flexShrink:0,marginLeft:8}},
+        h('button',{className:'ib',title:'Play',onClick:()=>onPlay(r),style:{padding:'7px 9px',color:C.a,borderColor:'rgba(136,131,235,0.3)'}},h(Icon,{name:'player-play',style:{fontSize:18}})),
+        h('button',{className:'ib',title:'Edit',onClick:()=>onEdit(r),style:{padding:'7px 9px'}},h(Icon,{name:'edit',style:{fontSize:18}})),
+        h('button',{className:'ib',title:'Add to session',onClick:()=>setPickerOpen(o=>!o),style:{padding:'7px 9px',color:T['tangerine-text'],borderColor:'rgba(224,128,74,0.3)'}},h(Icon,{name:'folder',style:{fontSize:18}})),
+        h('button',{className:'ib',title:'Delete',onClick:()=>onDelete(r.id),style:{padding:'7px 9px',color:C.danger,borderColor:'rgba(217,79,79,0.3)'}},h(Icon,{name:'trash',style:{fontSize:18}})))),
+    h('div',{style:{display:'flex',gap:5,flexWrap:'wrap'}},
+      r.exercises.map(e=>h('span',{key:e.id,style:pill('rgba(255,255,255,0.05)',C.ts,C.b)},
+        r.mode==='circuit'?e.name||'Exercise':`${e.name||'Exercise'} ×${e.sets}`))),
+    pickerOpen&&h('div',{style:{marginTop:10,background:C.s2,border:`1px solid ${C.b}`,borderRadius:10,padding:'10px'}},
+      h('p',{style:{fontSize:11,fontWeight:500,color:C.ts,textTransform:'uppercase',letterSpacing:'0.07em',marginBottom:8}},sessions.length===0?'No sessions yet':'Add to session'),
+      sessions.length===0
+        ?h('p',{style:{fontSize:12,color:C.tt,padding:'4px 0'}},'Create a session first.')
+        :sessions.map(s=>{
+            const has=s.routineIds.includes(r.id);
+            return h('button',{key:s.id,onClick:()=>{onAddToSession(s.id,r.id,!has);},style:{display:'flex',alignItems:'center',justifyContent:'space-between',width:'100%',padding:'7px 10px',background:'transparent',border:'none',borderRadius:7,color:has?C.a:C.ts,fontSize:13,cursor:'pointer',gap:8}},
+              h('span',null,s.name),
+              h(Icon,{name:has?'check':'plus',style:{fontSize:13}}));
+          })));
+}
+
+// ── Session Card ──────────────────────────────────────────────────────────────
+function SessionCard({s,routines,onOpen,onEdit,onDelete}){
+  const rlist=s.routineIds.map(id=>routines.find(r=>r.id===id)).filter(Boolean);
+  return h('div',{key:s.id,onClick:onOpen,style:{background:C.s1,border:`1px solid ${C.b}`,borderRadius:12,padding:'1rem 1.25rem',cursor:'pointer'}},
+    h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'flex-start',marginBottom:6}},
+      h('div',null,
+        h('p',{style:{fontWeight:600,fontSize:16,color:C.t,marginBottom:4}},s.name||'Untitled Session'),
+        h('p',{style:{fontSize:12,color:C.ts}},`${s.routineIds.length} routine${s.routineIds.length!==1?'s':''}`)),
+      h('div',{style:{display:'flex',gap:6},onClick:e=>e.stopPropagation()},
+        h('button',{className:'ib',onClick:e=>{e.stopPropagation();onEdit(s);},style:{padding:'5px 7px'}},h(Icon,{name:'edit',style:{fontSize:14}})),
+        h('button',{className:'ib',onClick:e=>{e.stopPropagation();onDelete(s.id);},style:{padding:'5px 7px',color:C.danger,borderColor:'rgba(240,96,96,0.3)'}},h(Icon,{name:'trash',style:{fontSize:14}})))),
+    rlist.length>0&&h('div',{style:{display:'flex',gap:5,flexWrap:'wrap',marginTop:4}},
+      rlist.map(r=>h('span',{key:r.id,style:pill('rgba(255,255,255,0.05)',C.ts,C.b)},r.title))));
+}
+
+
+// ── Group Row ─────────────────────────────────────────────────────────────────
+function GroupRow({group,routines,sessions,onPlay,onEdit,onDelete,onAddToSession,onRenameGroup,onDeleteGroup,draggingId,dropTarget}){
+  const[collapsed,setCollapsed]=useState(group.collapsed||false);
+  const[editing,setEditing]=useState(false);
+  const[name,setName]=useState(group.title);
+  const members=group.routineIds.map(id=>routines.find(r=>r.id===id)).filter(Boolean);
+  const commitName=()=>{setEditing(false);if(name.trim())onRenameGroup(group.id,name.trim());else setName(group.title);};
+  const isDropTarget=dropTarget&&dropTarget.id===group.id;
+  return h('div',{style:{display:'flex',flexDirection:'column',gap:6},'data-zone-id':group.id,'data-zone-type':'group'},
+    h('div',{
+
+      style:{display:'flex',alignItems:'center',gap:8,padding:'8px 10px',
+        background:isDropTarget?'rgba(136,131,235,0.10)':C.s2,
+        border:`1px solid ${isDropTarget?C.a:C.b}`,
+        borderRadius:10,transition:'border-color 0.15s,background 0.15s',
+        opacity:draggingId===group.id?0.4:1}},
+      h('button',{onClick:()=>setCollapsed(c=>!c),style:{background:'none',border:'none',cursor:'pointer',padding:'2px 4px',display:'flex',alignItems:'center'}},
+        h(Icon,{name:'chevron-down',style:{fontSize:14,color:C.ts,transform:collapsed?'rotate(-90deg)':'rotate(0deg)',transition:'transform 0.2s'}})),
+      editing
+        ?h('input',{autoFocus:true,value:name,onChange:e=>setName(e.target.value),onBlur:commitName,
+            onKeyDown:e=>{if(e.key==='Enter')commitName();if(e.key==='Escape'){setEditing(false);setName(group.title);}},
+            style:{flex:1,background:'transparent',border:'none',borderBottom:`1px solid ${C.a}`,color:C.t,fontSize:13,fontWeight:600,outline:'none',padding:'1px 2px'}})
+        :h('span',{onDoubleClick:()=>setEditing(true),style:{flex:1,fontSize:13,fontWeight:600,color:C.t,cursor:'text',userSelect:'none'}},group.title),
+      h('span',{style:{fontSize:11,color:C.tt,marginRight:4}},members.length),
+      h('button',{className:'ib',title:'Delete group',onClick:()=>onDeleteGroup(group.id),
+          style:{padding:'3px 6px',color:C.danger,borderColor:'rgba(240,96,96,0.2)',flexShrink:0}},
+        h(Icon,{name:'x',style:{fontSize:12}}))),
+    !collapsed&&h('div',{style:{display:'flex',flexDirection:'column',gap:6,paddingLeft:12,borderLeft:`2px solid ${C.b}`}},
+      members.map(r=>h('div',{key:r.id,'data-zone-id':r.id,'data-zone-type':'routine','data-group-id':group.id,
+          style:{opacity:draggingId===r.id?0.3:1,transition:'opacity 0.15s',
+            outline:dropTarget&&dropTarget.id===r.id?`2px solid ${C.a}`:'2px solid transparent',borderRadius:12}},
+        h(RoutineCard,{r,routines,sessions,onPlay,onEdit,onDelete,onAddToSession,
+          onLongPress:()=>onLongPress(r.id,'routine')}))),
+      members.length===0&&h('p',{style:{fontSize:12,color:C.tt,padding:'8px 4px',fontStyle:'italic'}},'Drag a routine here')));
+}
+
+// ── Home ──────────────────────────────────────────────────────────────────────
+function HomeView({routines,sessions,groups,tab,setTab,onNewRoutine,onEditRoutine,onDeleteRoutine,onPlayRoutine,onAddToSession,onNewSession,onEditSession,onDeleteSession,onOpenSession,onNewGroup,onRenameGroup,onDeleteGroup,onReorder}){
+  const tabStyle=active=>({color:active?C.a:C.ts,borderBottomColor:active?C.a:'transparent'});
+  // ── touch/mouse drag state ──
+  const[drag,setDrag]=useState(null);
+  const[dropTarget,setDropTarget]=useState(null);
+  const listRef=useRef(null);
+  const groupedIds=groups.flatMap(g=>g.routineIds);
+  const ungrouped=routines.filter(r=>!groupedIds.includes(r.id));
+  // find drop zone from point
+  function zoneAt(x,y){
+    const els=listRef.current?Array.from(listRef.current.querySelectorAll('[data-zone-id]')):[];
+    // walk in reverse (innermost first) — find deepest element whose rect contains the point
+    for(let i=els.length-1;i>=0;i--){
+      const el=els[i];
+      const rect=el.getBoundingClientRect();
+      if(y>=rect.top&&y<=rect.bottom&&x>=rect.left&&x<=rect.right){
+        return{id:el.dataset.zoneId,type:el.dataset.zoneType,groupId:el.dataset.groupId||null};
+      }
+    }
+    return null;
+  }
+  function startDrag(id,type){
+    setDrag({id,type});
+  }
+  function onPointerMove(e){
+    if(!drag)return;
+    const cy=e.touches?e.touches[0].clientY:e.clientY;
+    const cx=e.touches?e.touches[0].clientX:e.clientX;
+    const zone=zoneAt(cx,cy);
+    setDropTarget(zone&&zone.id!==drag.id?zone:null);
+  }
+  function onPointerUp(e){
+    if(!drag){return;}
+    if(dropTarget)onReorder(drag.type,drag.id,dropTarget.type,dropTarget.id,dropTarget.groupId);
+    setDrag(null);setDropTarget(null);
+  }
+  // ghost label
+  // attach move/up to window so release outside div still fires
+  useEffect(()=>{
+    if(!drag)return;
+    const mm=e=>onPointerMove(e);
+    const mu=e=>onPointerUp(e);
+    const tm=e=>{e.preventDefault();onPointerMove(e);};
+    const tu=e=>onPointerUp(e);
+    window.addEventListener('mousemove',mm);
+    window.addEventListener('mouseup',mu);
+    window.addEventListener('touchmove',tm,{passive:false});
+    window.addEventListener('touchend',tu);
+    return()=>{
+      window.removeEventListener('mousemove',mm);
+      window.removeEventListener('mouseup',mu);
+      window.removeEventListener('touchmove',tm);
+      window.removeEventListener('touchend',tu);
+    };
+  },[drag]);
+  return h('div',{style:{padding:'1.5rem 1rem 3rem',maxWidth:420,margin:'0 auto',userSelect:drag?'none':'auto'}},
+
+    h('div',{style:{display:'flex',justifyContent:'space-between',alignItems:'center',marginBottom:'1rem'}},
+      h('h1',{style:{fontSize:22,fontWeight:600,color:C.t}},'Workout Timer'),
+      h('button',{className:'ib',onClick:tab==='routines'?onNewRoutine:onNewSession,style:{padding:'8px 14px',gap:6,color:C.t,borderColor:C.bhi}},
+        h(Icon,{name:'plus',style:{fontSize:15}}),' New')),
+    h('div',{style:{display:'flex',borderBottom:`1px solid ${C.b}`,marginBottom:0}},
+      h('button',{className:'tab',onClick:()=>setTab('routines'),style:tabStyle(tab==='routines')},`Routines (${routines.length})`),
+      h('button',{className:'tab',onClick:()=>setTab('sessions'),style:tabStyle(tab==='sessions')},`Sessions (${sessions.length})`)),
+    tab==='routines'&&h('button',{onClick:onNewGroup,style:{width:'100%',padding:'8px 0',background:'transparent',border:'none',borderBottom:`1px solid ${C.b}`,color:C.tt,fontSize:12,fontWeight:500,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',gap:5,marginBottom:'1.25rem',letterSpacing:'0.03em'}},
+      h(Icon,{name:'plus',style:{fontSize:12}}),'New Group'),
+    tab!=='routines'&&h('div',{style:{marginBottom:'1.25rem'}}),
+    tab==='routines'
+      ?(routines.length===0
+          ?h('div',{style:{textAlign:'center',padding:'5rem 1rem'}},
+              h(Icon,{name:'dumbbell',style:{fontSize:48,display:'block',marginBottom:16,opacity:0.18,color:C.t}}),
+              h('p',{style:{fontSize:15,fontWeight:500,color:C.t,marginBottom:4}},'No routines yet'),
+              h('p',{style:{fontSize:13,color:C.ts}},'Tap "New" to build your first routine'))
+          :h('div',{ref:listRef,style:{display:'flex',flexDirection:'column',gap:10}},
+              groups.map(g=>h(GroupRow,{key:g.id,group:g,routines,sessions,
+                onPlay:onPlayRoutine,onEdit:onEditRoutine,onDelete:onDeleteRoutine,onAddToSession,
+                onRenameGroup,onDeleteGroup,
+
+                draggingId:drag?drag.id:null,dropTarget})),
+              ungrouped.map(r=>h('div',{key:r.id,'data-zone-id':r.id,'data-zone-type':'routine',
+                  style:{outline:dropTarget&&dropTarget.id===r.id?`2px solid ${C.a}`:'2px solid transparent',borderRadius:12,opacity:drag&&drag.id===r.id?0.3:1,transition:'opacity 0.15s'}},
+                h(RoutineCard,{r,routines,sessions,onPlay:onPlayRoutine,onEdit:onEditRoutine,onDelete:onDeleteRoutine,onAddToSession,
+                  onLongPress:()=>void 0})))))
+      :(sessions.length===0
+          ?h('div',{style:{textAlign:'center',padding:'5rem 1rem'}},
+              h(Icon,{name:'layout-list',style:{fontSize:48,display:'block',marginBottom:16,opacity:0.18,color:C.t}}),
+              h('p',{style:{fontSize:15,fontWeight:500,color:C.t,marginBottom:4}},'No sessions yet'),
+              h('p',{style:{fontSize:13,color:C.ts}},'Tap "New" to build your first session'))
+          :h('div',{style:{display:'flex',flexDirection:'column',gap:10}},
+              sessions.map(s=>h(SessionCard,{key:s.id,s,routines,onOpen:()=>onOpenSession(s),onEdit:onEditSession,onDelete:onDeleteSession})))));
+}
+
+// ── App ───────────────────────────────────────────────────────────────────────
+function App(){
+  const[routines,setRoutines]=useState([]);
+  const[sessions,setSessions]=useState([]);
+  const[groups,setGroups]=useState([]);
+  const[view,setView]=useState('home');
+  const[editingRoutine,setEditingRoutine]=useState(null);
+  const[editingSession,setEditingSession]=useState(null);
+  const[activeSession,setActiveSession]=useState(null);
+  const[activeRoutine,setActiveRoutine]=useState(null);
+  const[homeTab,setHomeTab]=useState('routines');
+
+  // load
+  useEffect(()=>{
+    const d=loadData();
+    setRoutines(d.routines||[]);
+    setSessions(d.sessions||[]);
+    setGroups(d.groups||[]);
+  },[]);
+  // save
+  useEffect(()=>{saveData({routines,sessions,groups});},[routines,sessions,groups]);
+
+  const persistRoutine=r=>{
+    setRoutines(p=>{const i=p.findIndex(x=>x.id===r.id);return i>=0?p.map(x=>x.id===r.id?r:x):[...p,r];});
+    setView('home');
+  };
+  const persistSession=s=>{
+    setSessions(p=>{const i=p.findIndex(x=>x.id===s.id);return i>=0?p.map(x=>x.id===s.id?s:x):[...p,s];});
+    setView('home');
+  };
+  const deleteRoutine=id=>{
+    setRoutines(p=>p.filter(r=>r.id!==id));
+    setSessions(p=>p.map(s=>({...s,routineIds:s.routineIds.filter(x=>x!==id)})));
+    setGroups(p=>p.map(g=>({...g,routineIds:g.routineIds.filter(x=>x!==id)})));
+  };
+  const deleteSession=id=>setSessions(p=>p.filter(s=>s.id!==id));
+  const addToSession=(sessId,routineId,add)=>{
+    setSessions(p=>p.map(s=>s.id===sessId
+      ?{...s,routineIds:add?[...s.routineIds.filter(x=>x!==routineId),routineId]:s.routineIds.filter(x=>x!==routineId)}
+      :s));
+  };
+  const newGroup=()=>setGroups(p=>[...p,{id:uid(),title:'New Group',routineIds:[],collapsed:false}]);
+  const renameGroup=(id,title)=>setGroups(p=>p.map(g=>g.id===id?{...g,title}:g));
+  const deleteGroup=id=>setGroups(p=>p.filter(g=>g.id!==id));
+  const removeFromGroup=(groupId,routineId)=>setGroups(p=>p.map(g=>g.id===groupId?{...g,routineIds:g.routineIds.filter(x=>x!==routineId)}:g)); // routines become ungrouped
+  const handleReorder=(srcType,srcId,tgtType,tgtId,tgtGroupId)=>{
+    setGroups(pg=>{
+      // helper: remove srcId from all groups
+      const stripped=pg.map(g=>({...g,routineIds:g.routineIds.filter(x=>x!==srcId)}));
+      if(srcType==='routine'&&tgtType==='group'){
+        // drop onto group header → append to that group
+        return stripped.map(g=>g.id===tgtId?{...g,routineIds:[...g.routineIds,srcId]}:g);
+      }
+      if(srcType==='routine'&&tgtType==='routine'){
+        const tgtGroup=stripped.find(g=>g.routineIds.includes(tgtId));
+        if(tgtGroup){
+          // insert into tgt's group before tgtId
+          return stripped.map(g=>{
+            if(g.id!==tgtGroup.id)return g;
+            const ids=[...g.routineIds];
+            const ti=ids.indexOf(tgtId);
+            ids.splice(ti,0,srcId);
+            return{...g,routineIds:ids};
+          });
+        } else {
+          // tgt is ungrouped — move src to ungrouped (remove from any group, done by stripped)
+          // reorder handled below in setRoutines
+          return stripped;
+        }
+      }
+      if(srcType==='group'&&tgtType==='group'){
+        const arr=stripped.filter(g=>g.id!==srcId);
+        const orig=pg.find(g=>g.id===srcId);
+        const ti=arr.findIndex(g=>g.id===tgtId);
+        arr.splice(ti,0,orig);
+        return arr;
+      }
+      return stripped;
+    });
+    // reorder ungrouped routines when dropping routine onto ungrouped routine
+    if(srcType==='routine'&&tgtType==='routine'){
+      setRoutines(p=>{
+        const tgtInGroup=groups.some(g=>g.routineIds.includes(tgtId));
+        if(tgtInGroup)return p;
+        const src=p.find(r=>r.id===srcId);
+        if(!src)return p;
+        const arr=[...p.filter(r=>r.id!==srcId)];
+        const ti=arr.findIndex(r=>r.id===tgtId);
+        if(ti>=0)arr.splice(ti,0,src);else arr.push(src);
+        return arr;
+      });
+    }
+  };
+
+  if(view==='editRoutine')return h(EditRoutineView,{routine:editingRoutine,onSave:persistRoutine,onBack:()=>setView('home')});
+  if(view==='editSession')return h(EditSessionView,{session:editingSession,routines,onSave:persistSession,onBack:()=>setView('home')});
+  if(view==='sessionDetail')return h(SessionDetailView,{session:activeSession,routines,onBack:()=>setView('home'),onStartRoutine:r=>{setActiveRoutine(r);setView('timer');}});
+  if(view==='timer')return h(TimerView,{routine:activeRoutine,onBack:()=>{setView(activeSession?'sessionDetail':'home');}});
+  return h(HomeView,{
+    routines,sessions,groups,tab:homeTab,setTab:setHomeTab,
+    onNewRoutine:()=>{setEditingRoutine(newTradRoutine());setView('editRoutine');},
+    onEditRoutine:r=>{setEditingRoutine(JSON.parse(JSON.stringify(r)));setView('editRoutine');},
+    onDeleteRoutine:deleteRoutine,
+    onPlayRoutine:r=>{setActiveSession(null);setActiveRoutine(r);setView('timer');},
+    onAddToSession:addToSession,
+    onNewSession:()=>{setEditingSession({id:uid(),name:'',routineIds:[]});setView('editSession');},
+    onEditSession:s=>{setEditingSession(JSON.parse(JSON.stringify(s)));setView('editSession');},
+    onDeleteSession:deleteSession,
+    onOpenSession:s=>{setActiveSession(s);setHomeTab('sessions');setView('sessionDetail');},
+    onNewGroup:newGroup,onRenameGroup:renameGroup,onDeleteGroup:deleteGroup,onReorder:handleReorder,
+  });
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(h(App));
+</script>
+</body>
+</html>
