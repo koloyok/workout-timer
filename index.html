@@ -550,7 +550,7 @@ function HomeView({routines,sessions,groups,tab,setTab,onNewRoutine,onEditRoutin
       h('button',{onClick:onNewGroup,style:{flex:1,padding:'8px 0',background:'transparent',border:'none',color:C.tt,fontSize:12,fontWeight:500,cursor:'pointer',display:'flex',alignItems:'center',justifyContent:'center',gap:5,letterSpacing:'0.03em'}},
         h(Icon,{name:'plus',style:{fontSize:12}}),'New Group')),
     tab==='routines'
-      ?(routines.length===0
+      ?(routines.length===0&&groups.length===0
           ?h('div',{style:{textAlign:'center',padding:'5rem 1rem'}},
               h(Icon,{name:'dumbbell',style:{fontSize:48,display:'block',marginBottom:16,opacity:0.18,color:C.t}}),
               h('p',{style:{fontSize:15,fontWeight:500,color:C.t,marginBottom:4}},'No routines yet'),
