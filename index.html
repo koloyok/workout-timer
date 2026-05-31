@@ -71,8 +71,8 @@ const clone=x=>JSON.parse(JSON.stringify(x));
 const fmt=s=>{const m=Math.floor(s/60);return m?`${m}:${String(s%60).padStart(2,'0')}`:String(s);};
 const fmtL=s=>s===0?'None':s<60?`${s}s`:`${fmt(s)} min`;
 
-const newTradEx=()=>({id:uid(),name:'',mode:'reps',reps:10,duration:60,sets:3,restBetweenSets:60,restAfterExercise:120});
-const newCircEx=()=>({id:uid(),name:'',mode:'reps',reps:10,duration:60,restAfterExercise:120});
+const newTradEx=()=>({id:uid(),name:'',mode:'reps',reps:10,duration:30,sets:3,restBetweenSets:60,restAfterExercise:120});
+const newCircEx=()=>({id:uid(),name:'',mode:'reps',reps:10,duration:30,restAfterExercise:120});
 const newTradRoutine=()=>({id:uid(),title:'',mode:'traditional',exercises:[newTradEx()]});
 const exLabel=(e,circ)=>{const n=e.name||'Exercise';return circ?n:`${n} ×${e.sets}`;};
 
@@ -170,10 +170,10 @@ function TypeRow({ex,onChange}){
     ex.mode==='reps'
       ?h(Stepper,{value:ex.reps,onChange:v=>onChange('reps',v),min:1,max:999})
       :h('div',{style:{display:'flex',alignItems:'center',gap:8,flex:1,minWidth:0}},
-          h('input',{type:'range',min:5,max:300,step:5,value:ex.duration,onChange:e=>onChange('duration',+e.target.value),style:{flex:1,minWidth:0}}),
-          h('input',{type:'number',value:rawDur,min:5,max:300,
+          h('input',{type:'range',min:5,max:60,step:5,value:ex.duration,onChange:e=>onChange('duration',+e.target.value),style:{flex:1,minWidth:0}}),
+          h('input',{type:'number',value:rawDur,min:5,max:60,
             onChange:e=>setRawDur(e.target.value),
-            onBlur:()=>{const v=parseInt(rawDur);const clamped=isNaN(v)?5:Math.min(300,Math.max(5,v));onChange('duration',clamped);setRawDur(String(clamped));},
+            onBlur:()=>{const v=parseInt(rawDur);const clamped=isNaN(v)?5:Math.min(60,Math.max(5,v));onChange('duration',clamped);setRawDur(String(clamped));},
             style:{width:46,padding:'4px 6px',fontSize:13,fontWeight:500,borderRadius:6,border:`1px solid ${C.b}`,background:C.inp,color:C.a,textAlign:'center',fontFamily:'inherit',flexShrink:0}})));
 }
 
@@ -468,7 +468,7 @@ function SessionCard({s,routines,onOpen,onEdit,onDelete}){
 }
 
 // ── Group Row ─────────────────────────────────────────────────────────────────
-function GroupRow({group,routines,sessions,onPlay,onEdit,onDuplicate,onDelete,onAddToSession,onRenameGroup,onDeleteGroup,onToggleCollapse}){
+function GroupRow({group,routines,sessions,reordering,onPlay,onEdit,onDuplicate,onDelete,onAddToSession,onRenameGroup,onDeleteGroup,onReorderMembers,onToggleCollapse}){
   const[collapsed,setCollapsed]=useState(group.collapsed||false);
   const[editing,setEditing]=useState(false);
   const[name,setName]=useState(group.title);
@@ -490,12 +490,17 @@ function GroupRow({group,routines,sessions,onPlay,onEdit,onDuplicate,onDelete,on
       members.length>0&&h('div',{style:{display:'flex',gap:5,flexWrap:'wrap'}},
         members.map(r=>h('span',{key:r.id,style:PILL},r.title||'Untitled')))),
     !collapsed&&h('div',{style:{display:'flex',flexDirection:'column',gap:6,paddingLeft:12,borderLeft:`2px solid ${C.b}`}},
-      members.map(r=>h(RoutineCard,{key:r.id,r,sessions,onPlay,onEdit,onDuplicate,onDelete,onAddToSession})),
-      members.length===0&&h('p',{style:{fontSize:12,color:C.tt,padding:'8px 4px',fontStyle:'italic'}},'Edit a routine and assign it to this group')));
+      reordering
+        ?members.map((r,i)=>h('div',{key:r.id,style:{display:'flex',alignItems:'center',gap:10,padding:'12px 14px',background:C.s1,border:`1px solid ${C.b}`,borderRadius:12}},
+            h('span',{style:{flex:1,fontSize:15,fontWeight:600,color:C.t}},r.title||'Untitled'),
+            h('button',{...updownBtn(()=>onReorderMembers(i,-1),i===0)},h(Icon,{name:'chevron-up',style:{fontSize:16}})),
+            h('button',{...updownBtn(()=>onReorderMembers(i,1),i===members.length-1)},h(Icon,{name:'chevron-down',style:{fontSize:16}}))))
+        :members.map(r=>h(RoutineCard,{key:r.id,r,sessions,onPlay,onEdit,onDuplicate,onDelete,onAddToSession})),
+      !reordering&&members.length===0&&h('p',{style:{fontSize:12,color:C.tt,padding:'8px 4px',fontStyle:'italic'}},'Edit a routine and assign it to this group')));
 }
 
 // ── Home ──────────────────────────────────────────────────────────────────────
-function HomeView({routines,sessions,groups,tab,setTab,onNewRoutine,onEditRoutine,onDuplicateRoutine,onDeleteRoutine,onPlayRoutine,onAddToSession,onNewSession,onEditSession,onDeleteSession,onOpenSession,onNewGroup,onRenameGroup,onDeleteGroup,onToggleCollapse,onReorderRoutines,onReorderGroups,onReorderSessions}){
+function HomeView({routines,sessions,groups,tab,setTab,onNewRoutine,onEditRoutine,onDuplicateRoutine,onDeleteRoutine,onPlayRoutine,onAddToSession,onNewSession,onEditSession,onDeleteSession,onOpenSession,onNewGroup,onRenameGroup,onDeleteGroup,onToggleCollapse,onReorderRoutines,onReorderGroups,onReorderSessions,onReorderGroupMembers}){
   const[reordering,setReordering]=useState(false);
   const[menuOpen,setMenuOpen]=useState(false);
   const importRef=useRef(null);
@@ -565,9 +570,10 @@ function HomeView({routines,sessions,groups,tab,setTab,onNewRoutine,onEditRoutin
                     h('button',{...updownBtn(()=>moveTop(i,1),i===topItems.length-1)},h(Icon,{name:'chevron-down',style:{fontSize:16}})));
                 }))
             :h('div',{style:{display:'flex',flexDirection:'column',gap:10}},
-                groups.map(g=>h(GroupRow,{key:g.id,group:g,routines,sessions,
+                groups.map(g=>h(GroupRow,{key:g.id,group:g,routines,sessions,reordering,
                   onPlay:onPlayRoutine,onEdit:onEditRoutine,onDuplicate:onDuplicateRoutine,onDelete:onDeleteRoutine,onAddToSession,
                   onRenameGroup,onDeleteGroup,
+                  onReorderMembers:(i,dir)=>onReorderGroupMembers(g.id,i,dir),
                   onToggleCollapse:v=>onToggleCollapse(g.id,v)})),
                 ungrouped.map(r=>h(RoutineCard,{key:r.id,r,sessions,
                   onPlay:onPlayRoutine,onEdit:onEditRoutine,onDuplicate:onDuplicateRoutine,onDelete:onDeleteRoutine,onAddToSession}))))
@@ -636,6 +642,7 @@ function App(){
   const deleteGroup=id=>setGroups(p=>p.filter(g=>g.id!==id));
   const reorderGroups=newGroups=>setGroups(p=>{const rest=p.filter(g=>!newGroups.some(x=>x.id===g.id));return[...newGroups,...rest];});
   const reorderRoutines=(newUngrouped,groupedIds)=>setRoutines(p=>{const grouped=p.filter(r=>groupedIds.includes(r.id));return[...grouped,...newUngrouped];});
+  const reorderGroupMembers=(groupId,i,dir)=>setGroups(p=>p.map(g=>g.id===groupId?{...g,routineIds:moveItem(g.routineIds,i,dir)}:g));
 
   if(view==='editRoutine')return h(EditRoutineView,{routine:editingRoutine,groups,onSave:persistRoutine,onBack:()=>setView('home')});
   if(view==='editSession')return h(EditSessionView,{session:editingSession,routines,onSave:persistSession,onBack:()=>setView('home')});
@@ -655,6 +662,7 @@ function App(){
     onOpenSession:s=>{setActiveSession(s);setHomeTab('sessions');setView('sessionDetail');},
     onNewGroup:newGroup,onRenameGroup:renameGroup,onDeleteGroup:deleteGroup,onToggleCollapse:toggleCollapse,
     onReorderGroups:reorderGroups,onReorderRoutines:reorderRoutines,onReorderSessions:setSessions,
+    onReorderGroupMembers:reorderGroupMembers,
   });
 }
 
