@@ -468,7 +468,7 @@ function SessionCard({s,routines,onOpen,onEdit,onDelete}){
 }
 
 // ── Group Row ─────────────────────────────────────────────────────────────────
-function GroupRow({group,routines,sessions,reordering,onPlay,onEdit,onDuplicate,onDelete,onAddToSession,onRenameGroup,onDeleteGroup,onReorderMembers,onToggleCollapse}){
+function GroupRow({group,routines,sessions,reordering,reorderIdx,reorderTotal,onPlay,onEdit,onDuplicate,onDelete,onAddToSession,onRenameGroup,onDeleteGroup,onMoveTop,onReorderMembers,onToggleCollapse}){
   const[collapsed,setCollapsed]=useState(group.collapsed||false);
   const[editing,setEditing]=useState(false);
   const[name,setName]=useState(group.title);
@@ -485,8 +485,12 @@ function GroupRow({group,routines,sessions,reordering,onPlay,onEdit,onDuplicate,
                 onKeyDown:e=>{if(e.key==='Enter')commitName();if(e.key==='Escape'){setEditing(false);setName(group.title);}},
                 style:{flex:1,background:'transparent',border:'none',borderBottom:`1px solid ${C.a}`,color:C.t,fontSize:16,fontWeight:600,outline:'none',padding:'1px 2px'}})
             :h('span',{onDoubleClick:()=>setEditing(true),style:{flex:1,fontSize:16,fontWeight:600,color:C.t,cursor:'text',userSelect:'none'}},group.title)),
-        h('button',{className:'ib',title:'Delete group',onClick:()=>onDeleteGroup(group.id),style:{padding:'7px 9px',color:C.danger,borderColor:'rgba(217,79,79,0.3)',flexShrink:0}},
-          h(Icon,{name:'trash',style:{fontSize:18}}))),
+        h('div',{style:{display:'flex',gap:4,flexShrink:0,alignItems:'center'}},
+          reordering&&h(Fragment,null,
+            h('button',{...updownBtn(()=>onMoveTop(-1),reorderIdx===0)},h(Icon,{name:'chevron-up',style:{fontSize:16}})),
+            h('button',{...updownBtn(()=>onMoveTop(1),reorderIdx===reorderTotal-1)},h(Icon,{name:'chevron-down',style:{fontSize:16}}))),
+          !reordering&&h('button',{className:'ib',title:'Delete group',onClick:()=>onDeleteGroup(group.id),style:{padding:'7px 9px',color:C.danger,borderColor:'rgba(217,79,79,0.3)'}},
+            h(Icon,{name:'trash',style:{fontSize:18}})))),
       members.length>0&&h('div',{style:{display:'flex',gap:5,flexWrap:'wrap'}},
         members.map(r=>h('span',{key:r.id,style:PILL},r.title||'Untitled')))),
     !collapsed&&h('div',{style:{display:'flex',flexDirection:'column',gap:6,paddingLeft:12,borderLeft:`2px solid ${C.b}`}},
@@ -545,7 +549,7 @@ function HomeView({routines,sessions,groups,tab,setTab,onNewRoutine,onEditRoutin
         reordering
           ?h('button',{onClick:()=>setReordering(false),style:{padding:'7px 16px',background:C.a,border:'none',borderRadius:8,color:'#1a1a1a',fontSize:14,fontWeight:600,cursor:'pointer'}},'Done')
           :h(Fragment,null,
-              (tab==='routines'?(groups.length+ungrouped.length)>1:sessions.length>1)&&h('button',{onClick:()=>setReordering(true),style:{padding:'7px 14px',background:'transparent',border:`1px solid ${C.b}`,borderRadius:8,color:C.ts,fontSize:14,fontWeight:500,cursor:'pointer'}},'Reorder'),
+              (tab==='routines'?(groups.length+ungrouped.length)>1||groups.some(g=>g.routineIds.length>1):sessions.length>1)&&h('button',{onClick:()=>setReordering(true),style:{padding:'7px 14px',background:'transparent',border:`1px solid ${C.b}`,borderRadius:8,color:C.ts,fontSize:14,fontWeight:500,cursor:'pointer'}},'Reorder'),
               h('button',{className:'ib',onClick:tab==='routines'?onNewRoutine:onNewSession,style:{padding:'8px 14px',gap:6,color:C.t,borderColor:C.bhi}},
                 h(Icon,{name:'plus',style:{fontSize:15}}),' New')))),
     h('div',{style:{display:'flex',borderBottom:`1px solid ${C.b}`}},
@@ -560,23 +564,20 @@ function HomeView({routines,sessions,groups,tab,setTab,onNewRoutine,onEditRoutin
               h(Icon,{name:'dumbbell',style:{fontSize:48,display:'block',marginBottom:16,opacity:0.18,color:C.t}}),
               h('p',{style:{fontSize:15,fontWeight:500,color:C.t,marginBottom:4}},'No routines yet'),
               h('p',{style:{fontSize:13,color:C.ts}},'Tap "New" to build your first routine'))
-          :reordering
-            ?h('div',{style:{display:'flex',flexDirection:'column',gap:10}},
-                topItems.map((item,i)=>{
-                  const isGroup=item.type==='group';
-                  return h('div',{key:item.id,style:{display:'flex',alignItems:'center',gap:10,padding:'12px 14px',background:isGroup?C.s2:C.s1,border:`1px solid ${C.b}`,borderRadius:isGroup?10:12}},
-                    h('span',{style:{flex:1,fontSize:15,fontWeight:600,color:C.t}},item.title||'Untitled'),
-                    h('button',{...updownBtn(()=>moveTop(i,-1),i===0)},h(Icon,{name:'chevron-up',style:{fontSize:16}})),
-                    h('button',{...updownBtn(()=>moveTop(i,1),i===topItems.length-1)},h(Icon,{name:'chevron-down',style:{fontSize:16}})));
-                }))
-            :h('div',{style:{display:'flex',flexDirection:'column',gap:10}},
-                groups.map(g=>h(GroupRow,{key:g.id,group:g,routines,sessions,reordering,
+          :h('div',{style:{display:'flex',flexDirection:'column',gap:10}},
+                groups.map((g,gi)=>h(GroupRow,{key:g.id,group:g,routines,sessions,reordering,
+                  reorderIdx:gi,reorderTotal:topItems.length,
                   onPlay:onPlayRoutine,onEdit:onEditRoutine,onDuplicate:onDuplicateRoutine,onDelete:onDeleteRoutine,onAddToSession,
                   onRenameGroup,onDeleteGroup,
+                  onMoveTop:(dir)=>moveTop(gi,dir),
                   onReorderMembers:(i,dir)=>onReorderGroupMembers(g.id,i,dir),
                   onToggleCollapse:v=>onToggleCollapse(g.id,v)})),
-                ungrouped.map(r=>h(RoutineCard,{key:r.id,r,sessions,
-                  onPlay:onPlayRoutine,onEdit:onEditRoutine,onDuplicate:onDuplicateRoutine,onDelete:onDeleteRoutine,onAddToSession}))))
+                ungrouped.map((r,ri)=>h('div',{key:r.id,style:{display:'flex',alignItems:'center',gap:10}},
+                  h(RoutineCard,{r,sessions,
+                    onPlay:onPlayRoutine,onEdit:onEditRoutine,onDuplicate:onDuplicateRoutine,onDelete:onDeleteRoutine,onAddToSession}),
+                  reordering&&h('div',{style:{display:'flex',flexDirection:'column',gap:4,flexShrink:0}},
+                    h('button',{...updownBtn(()=>moveTop(groups.length+ri,-1),groups.length+ri===0)},h(Icon,{name:'chevron-up',style:{fontSize:16}})),
+                    h('button',{...updownBtn(()=>moveTop(groups.length+ri,1),groups.length+ri===topItems.length-1)},h(Icon,{name:'chevron-down',style:{fontSize:16}})))))))
       :(sessions.length===0
           ?h('div',{style:{textAlign:'center',padding:'5rem 1rem',marginTop:'1.25rem'}},
               h(Icon,{name:'layout-list',style:{fontSize:48,display:'block',marginBottom:16,opacity:0.18,color:C.t}}),
@@ -644,9 +645,11 @@ function App(){
   const reorderRoutines=(newUngrouped,groupedIds)=>setRoutines(p=>{const grouped=p.filter(r=>groupedIds.includes(r.id));return[...grouped,...newUngrouped];});
   const reorderGroupMembers=(groupId,i,dir)=>setGroups(p=>p.map(g=>g.id===groupId?{...g,routineIds:moveItem(g.routineIds,i,dir)}:g));
 
+  const groupedIds=groups.flatMap(g=>g.routineIds);
+  const orderedRoutines=[...groups.flatMap(g=>g.routineIds.map(id=>routines.find(r=>r.id===id)).filter(Boolean)),...routines.filter(r=>!groupedIds.includes(r.id))];
   if(view==='editRoutine')return h(EditRoutineView,{routine:editingRoutine,groups,onSave:persistRoutine,onBack:()=>setView('home')});
-  if(view==='editSession')return h(EditSessionView,{session:editingSession,routines,onSave:persistSession,onBack:()=>setView('home')});
-  if(view==='sessionDetail')return h(SessionDetailView,{session:activeSession,routines,onBack:()=>setView('home'),onStartRoutine:r=>{setActiveRoutine(r);setView('timer');}});
+  if(view==='editSession')return h(EditSessionView,{session:editingSession,routines:orderedRoutines,onSave:persistSession,onBack:()=>setView('home')});
+  if(view==='sessionDetail')return h(SessionDetailView,{session:activeSession,routines:orderedRoutines,onBack:()=>setView('home'),onStartRoutine:r=>{setActiveRoutine(r);setView('timer');}});
   if(view==='timer')return h(TimerView,{routine:activeRoutine,onBack:()=>setView(activeSession?'sessionDetail':'home')});
   return h(HomeView,{
     routines,sessions,groups,tab:homeTab,setTab:setHomeTab,
