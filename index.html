@@ -72,7 +72,7 @@ const fmt=s=>{const m=Math.floor(s/60);return m?`${m}:${String(s%60).padStart(2,
 const fmtL=s=>s===0?'None':s<60?`${s}s`:`${fmt(s)} min`;
 
 const newTradEx=()=>({id:uid(),name:'',mode:'reps',reps:10,duration:30,sets:3,restBetweenSets:60,restAfterExercise:120});
-const newCircEx=()=>({id:uid(),name:'',mode:'reps',reps:10,duration:30,restAfterExercise:120});
+const newCircEx=()=>({id:uid(),name:'',mode:'reps',reps:10,duration:30,sets:1,restBetweenSets:60,restAfterExercise:120});
 const newTradRoutine=()=>({id:uid(),title:'',mode:'traditional',exercises:[newTradEx()]});
 const exLabel=(e,circ)=>{const n=e.name||'Exercise';return circ?n:`${n} ×${e.sets}`;};
 
@@ -94,7 +94,12 @@ function buildCircSeq(r){
   const{rounds,restBetweenRounds,exercises:exs}=r;
   for(let rd=1;rd<=rounds;rd++){
     exs.forEach((ex,ei)=>{
-      steps.push({type:'work',label:ex.name||'Exercise',info:rounds>1?`Round ${rd} of ${rounds}`:null,timed:ex.mode==='time',dur:ex.mode==='time'?ex.duration:null,reps:ex.mode==='reps'?ex.reps:null});
+      const sets=ex.sets||1;
+      for(let si=1;si<=sets;si++){
+        const setInfo=sets>1?`Set ${si} of ${sets}`:(rounds>1?`Round ${rd} of ${rounds}`:null);
+        steps.push({type:'work',label:ex.name||'Exercise',info:setInfo,timed:ex.mode==='time',dur:ex.mode==='time'?ex.duration:null,reps:ex.mode==='reps'?ex.reps:null});
+        if(si<sets&&ex.restBetweenSets>0)steps.push({type:'rest',label:'Rest',info:`Set ${si+1} of ${sets} next`,dur:ex.restBetweenSets,timed:true});
+      }
       if(ei<exs.length-1&&ex.restAfterExercise>0)steps.push({type:'rest',label:'Rest',info:`Up next: ${exs[ei+1]?.name||'next exercise'}`,dur:ex.restAfterExercise,timed:true});
     });
     if(rd<rounds&&restBetweenRounds>0)steps.push({type:'rest',label:`Round ${rd} complete`,info:`Round ${rd+1} of ${rounds} up next`,dur:restBetweenRounds,timed:true,isRoundRest:true});
@@ -106,7 +111,7 @@ const buildSeq=r=>[{type:'prepare',label:'Get ready',timed:true,dur:5},...(r.mod
 function estTotal(r){
   if(r.mode==='circuit'){
     const{rounds,restBetweenRounds,exercises:exs}=r;
-    const oneRound=exs.reduce((t,ex,ei)=>{if(ex.mode==='time')t+=ex.duration;if(ei<exs.length-1)t+=ex.restAfterExercise;return t;},0);
+    const oneRound=exs.reduce((t,ex,ei)=>{const sets=ex.sets||1;if(ex.mode==='time')t+=ex.duration*sets;if(sets>1)t+=ex.restBetweenSets*(sets-1);if(ei<exs.length-1)t+=ex.restAfterExercise;return t;},0);
     return oneRound*rounds+restBetweenRounds*(rounds-1);
   }
   return r.exercises.reduce((t,ex,ei)=>{if(ex.mode==='time')t+=ex.duration*ex.sets;if(ex.sets>1)t+=ex.restBetweenSets*(ex.sets-1);if(ei<r.exercises.length-1)t+=ex.restAfterExercise;return t;},0);
@@ -196,6 +201,8 @@ function CircEx({ex,idx,total,isLast,onChange,onRemove,onMoveUp,onMoveDown}){
   return h('div',{style:card},
     h(ExName,{ex,idx,total,onChange,onRemove,onMoveUp,onMoveDown}),
     h(TypeRow,{ex,onChange}),
+    h(LR,{label:'Sets',right:h(Stepper,{value:ex.sets,onChange:v=>onChange('sets',v),min:1,max:20})}),
+    ex.sets>1&&h(LR,{label:'Rest between sets',right:h(SliderVal,{value:ex.restBetweenSets,onChange:v=>onChange('restBetweenSets',v),color:C.r})}),
     !isLast&&h(LR,{label:'Rest before next',right:h(SliderVal,{value:ex.restAfterExercise,onChange:v=>onChange('restAfterExercise',v)}),muted:true}));
 }
 
@@ -263,7 +270,9 @@ function EditRoutineView({routine,groups,onSave,onBack}){
 function EditSessionView({session,routines,onSave,onBack}){
   const[s,setS]=useState(session);
   const canSave=s.name.trim();
-  const toggle=id=>setS(p=>({...p,routineIds:p.routineIds.includes(id)?p.routineIds.filter(x=>x!==id):[...p.routineIds,id]}));
+  const addToPlaylist=id=>setS(p=>({...p,routineIds:[...p.routineIds,id]}));
+  const removeSlot=i=>setS(p=>({...p,routineIds:p.routineIds.filter((_,j)=>j!==i)}));
+  const moveSlot=(i,dir)=>setS(p=>({...p,routineIds:moveItem(p.routineIds,i,dir)}));
   return h('div',{style:{maxWidth:420,margin:'0 auto',paddingBottom:'4rem'}},
     h(EH,{canSave,onSave:()=>onSave(s),onBack,title:session.name?'Edit Session':'New Session'}),
     h('div',{style:{padding:'1.25rem 1rem',display:'flex',flexDirection:'column',gap:'1.5rem'}},
@@ -271,23 +280,42 @@ function EditSessionView({session,routines,onSave,onBack}){
         h(SL,{text:'Session Name'}),
         h('input',{value:s.name,onChange:e=>setS(p=>({...p,name:e.target.value})),placeholder:'e.g. Monday Push Day…',style:{width:'100%',padding:'10px 13px',fontSize:15,borderRadius:9,border:`1px solid ${C.b}`,background:C.inp,color:C.t}})),
       h('div',null,
-        h(SL,{text:`Routines · ${s.routineIds.length} selected`}),
+        h(SL,{text:'Add Routines'}),
         routines.length===0
-          ?h('p',{style:{fontSize:13,color:C.tt,padding:'1rem',textAlign:'center'}},`No routines yet — create one first`)
+          ?h('p',{style:{fontSize:13,color:C.tt,padding:'1rem',textAlign:'center'}},'No routines yet — create one first')
           :h('div',{style:{display:'flex',flexDirection:'column',gap:8}},
               routines.map(r=>{
-                const sel=s.routineIds.includes(r.id);
                 const ac=modeAccent(r.mode),bg=modeBg(r.mode);
-                return h('button',{key:r.id,onClick:()=>toggle(r.id),style:{display:'flex',alignItems:'center',gap:12,padding:'12px',background:sel?'rgba(136,131,235,0.08)':C.s2,border:`1px solid ${sel?C.a:C.b}`,borderRadius:12,cursor:'pointer',textAlign:'left',width:'100%'}},
-                  h('div',{style:{width:32,height:32,borderRadius:8,background:sel?'rgba(136,131,235,0.18)':bg,display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}},
-                    h(Icon,{name:r.mode==='circuit'?'refresh':'list-numbers',style:{fontSize:15,color:sel?C.a:ac}})),
+                const count=s.routineIds.filter(x=>x===r.id).length;
+                return h('button',{key:r.id,onClick:()=>addToPlaylist(r.id),style:{display:'flex',alignItems:'center',gap:12,padding:'12px',background:C.s2,border:`1px solid ${C.b}`,borderRadius:12,cursor:'pointer',textAlign:'left',width:'100%'}},
+                  h('div',{style:{width:32,height:32,borderRadius:8,background:bg,display:'flex',alignItems:'center',justifyContent:'center',flexShrink:0}},
+                    h(Icon,{name:r.mode==='circuit'?'refresh':'list-numbers',style:{fontSize:15,color:ac}})),
                   h('div',{style:{flex:1,minWidth:0}},
-                    h('p',{style:{fontWeight:600,fontSize:14,color:sel?C.t:C.ts,marginBottom:2}},r.title),
+                    h('p',{style:{fontWeight:600,fontSize:14,color:C.t,marginBottom:2}},r.title),
                     h('p',{style:{fontSize:12}},
                       h('span',{style:{color:ac,fontWeight:500}},r.mode==='circuit'?'Circuit':'Traditional'),
                       h('span',{style:{color:C.tt}},r.mode==='circuit'?` · ${r.rounds}r · ${r.exercises.length} exercises`:` · ${r.exercises.length} exercises`))),
-                  sel&&h(Icon,{name:'check',style:{fontSize:15,color:C.a,flexShrink:0}}));
-              })))));
+                  h('div',{style:{display:'flex',alignItems:'center',gap:8,flexShrink:0}},
+                    count>0&&h('span',{style:{fontSize:12,fontWeight:600,color:C.a,minWidth:16,textAlign:'center'}},`×${count}`),
+                    h(Icon,{name:'plus',style:{fontSize:15,color:C.ts}})));
+              }))),
+      s.routineIds.length>0&&h('div',null,
+        h(SL,{text:`Playlist · ${s.routineIds.length} ${s.routineIds.length===1?'routine':'routines'}`}),
+        h('div',{style:{display:'flex',flexDirection:'column',gap:6}},
+          s.routineIds.map((id,i)=>{
+            const r=routines.find(x=>x.id===id);
+            if(!r)return null;
+            const ac=modeAccent(r.mode);
+            return h('div',{key:i,style:{display:'flex',alignItems:'center',gap:8,padding:'10px 12px',background:C.s2,border:`1px solid ${C.b}`,borderRadius:10}},
+              h('span',{style:{fontSize:12,color:C.tt,minWidth:18,textAlign:'center',fontWeight:600}},i+1),
+              h('div',{style:{flex:1,minWidth:0}},
+                h('p',{style:{fontWeight:600,fontSize:14,color:C.t}},r.title),
+                h('span',{style:{fontSize:11,color:ac,fontWeight:500}},r.mode==='circuit'?'Circuit':'Traditional')),
+              h('button',{...updownBtn(()=>moveSlot(i,-1),i===0)},h(Icon,{name:'chevron-up',style:{fontSize:15}})),
+              h('button',{...updownBtn(()=>moveSlot(i,1),i===s.routineIds.length-1)},h(Icon,{name:'chevron-down',style:{fontSize:15}})),
+              h('button',{className:'ib',onClick:()=>removeSlot(i),style:{padding:'5px 7px',color:C.danger}},h(Icon,{name:'x',style:{fontSize:14}})));
+          }))))
+    );
 }
 
 // ── Session Detail ─────────────────────────────────────────────────────────────
